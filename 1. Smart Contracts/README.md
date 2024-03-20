@@ -61,7 +61,7 @@ Solidity is an object-oriented [programming language](https://www.simplilearn.c
 
 ![](../Resources/Smart%20Contracts/Blog-MetaMask-Logo.png)
 
-[**MetaMask**](https://moralis.io/metamask-explained-what-is-metamask/?utm_source=blog&utm_medium=post&utm_campaign=Remix%2520Explained%2520%25E2%2580%2593%2520What%2520is%2520Remix%253F) is one of the most popular wallets for storing coins and tokens (aka cryptocurrencies). The great thing about MetaMask is that it also serves as a gateway to access Web3 applications. You can also use MetaMask for authentication
+[**MetaMask**](https://moralis.io/metamask-explained-what-is-metamask/?utm_source=blog&utm_medium=post&utm_campaign=Remix%2520Explained%2520%25E2%2580%2593%2520What%2520is%2520Remix%253F) is one of the most popular wallets for storing coins and tokens (aka cryptocurrencies). The great thing about MetaMask is that it also serves as a gateway to access Web3 applications. You can also use MetaMask for authentication.
 
 
 

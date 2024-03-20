@@ -221,7 +221,7 @@ Objective: Create a Property Will Contract for a grandfather to distribute his p
    
    **Note**: the amount is in Wei, so we have to add those extra zeros to make it an ether unit.
    
-   Once, hit the transact button. and it will add the account as the family member of the owner. Similarly, add another account as a family member with their wallet address and some amount. Let's say, member 1 is getting 25 ethers and member 2 is getting 5 ethers.
+   Hit the transact button. and it will add the account as the family member of the owner. Similarly, add another account as a family member with their wallet address and some amount. Let's say, member 1 is getting 25 ethers and member 2 is getting 5 ethers.
    
    **Remember**: While deploying the contract, the owner had given 30 ether. So, he can only set the inheritance amount sum, up to 30 ether only. If you try to execute the transaction, with more than 30 ether, the contract will throw an error:
    

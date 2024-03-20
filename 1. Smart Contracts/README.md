@@ -80,11 +80,11 @@ Launch Remix Online IDE here: https://remix.ethereum.org/ and it will look like 
 
 ### First Solidity Contract
 
-Objective: Create a Property Will Contract for a grandfather to distribute his property amongs his grand children when he pass away.
+Objective: Create a Property Will Contract for a grandfather to distribute his property among his grandchildren when he passes away.
 
 1. Create a file under contract as Will.sol under contracts.
 
-2. Define the licence on top
+2. Define the license on top
    
    ```solidity
    // SPDX-License-Identifier: GPL-3.0
@@ -100,10 +100,10 @@ Objective: Create a Property Will Contract for a grandfather to distribute his p
    
    ```solidity
    contract Will {
-       // set up address of the owner
+       // set up the address of the owner
        address owner;
        uint fortune;
-       // variable to find if the grandfather is passed away
+       // variable to find if the grandfather has passed away
        bool deceased;
    
        // payable - to allow this function to send and receive either
@@ -116,13 +116,13 @@ Objective: Create a Property Will Contract for a grandfather to distribute his p
        // create modifier so the only person who can call the contract is the owner
        modifier onlyOwner {
            require(msg.sender == owner);
-           _;      // this underscore tells the function to shift back to the main function, basically we are preventing others to execute this contract, except the owner
+           _;      // this underscore tells the function to shift back to the main function, basically we are preventing others from executing this contract, except the owner
        }
    
-       // create modifier so that we only allocate funds if grandpa is deceased
+       // create a modifier so that we only allocate funds if Grandpa is deceased
        modifier mustBeDeceased {
            require(deceased == true);
-           _;      // this underscore tells the function to shift back to the main function, basically we are preventing the execution if owner is not deceased
+           _;      // this underscore tells the function to shift back to the main function, basically we are preventing the execution if the owner is not deceased
        }
    
        // list of family address
@@ -140,7 +140,7 @@ Objective: Create a Property Will Contract for a grandfather to distribute his p
        // pay each family member based on their wallet address
        function payout() private mustBeDeceased {
            for(uint i = 0; i < familyWallets.length; i++) {
-               // transfer the funds from contract address to reviever address
+               // transfer the funds from the contract address to receiver address
                familyWallets[i].transfer(inheritance[familyWallets[i]]);
            }
        }
@@ -153,13 +153,13 @@ Objective: Create a Property Will Contract for a grandfather to distribute his p
    
    ```
 
-5. Turn the Will contract to dApp. To do so, first we need to compile our contract.
+5. Turn the Will contract to dApp and to do so, first, we need to compile our contract.
    
    ![](../Resources/Smart%20Contracts/remix-compiler1.JPG)
    
    Once it is compiled, you can see the Compilation Details for more.
 
-6. Next is to deploy out contract, which is just below the compiler module. Deployment is important for a contract to run its internal functions. 
+6. Next is to deploy our contract, which is just below the compiler module. Deployment is important for a contract to run its internal functions. 
    
    ![](../Resources/Smart%20Contracts/deploy1.JPG)
    
@@ -169,11 +169,11 @@ Objective: Create a Property Will Contract for a grandfather to distribute his p
    
    - Accounts - Test ether accounts to run our contracts upon.
    
-   - Gas Limit - Show available gas fee amount for your contracts.
+   - Gas Limit - Show the available gas fee amounts for your contracts.
    
-   - Value - amount of ether that the current selected account is goin to allocate into out smart contract. And eventually, it will become the **owner** of the contract. The value is in **wei**, whic is smallest unit of ether.
+   - Value - the amount of ether that the currently selected account is going to allocate into our smart contract. And eventually, it will become the **owner** of the contract. The value is in **wei**, which is smallest unit of ether.
      
-     Put 30 as value and ether as unit for our contract.
+     Put 30 as value and ether as a unit for our contract.
 
 7. Now, everything is ready. Go ahead and hit Deploy.
    
@@ -199,19 +199,19 @@ Objective: Create a Property Will Contract for a grandfather to distribute his p
    value	30000000000000000000 wei
    ```
    
-   - Amount of 30 ether has been deducted from the current owner account
+   - Amount of 30 ether has been deducted from the current owner's account
    
    - Under deployed contracts - you will see the function we defined in our contract
 
-8. Now, our contract has been deployed, How de we actually interact with our contract? Let's checkout.
+8. Now, that our contract has been deployed, How do we actually interact with our contract? Let's check.
    
-   Under deployed contract, we have 2 interactive buttons
+   Under the deployed contract, we have 2 interactive buttons
    
    ![](../Resources/Smart%20Contracts/Deployed-Contract-Buttons.JPG)
    
-   This, provide us everything we need to run this smart contract. So, let's go ahead and test this smart contract.
+   This provides us with everything we need to run this smart contract. So, let's go ahead and test this smart contract.
 
-9. First, set the inheritance, by putting wallet addresses and amount. You can get the list of accounts from accounts dropdown:
+9. First, set the inheritance, by putting wallet addresses and amounts. You can get the list of accounts from the accounts dropdown:
    
    ![](../Resources/Smart%20Contracts/Accounts-List.JPG)
    
@@ -219,11 +219,11 @@ Objective: Create a Property Will Contract for a grandfather to distribute his p
    
    ![](../Resources/Smart%20Contracts/setInheritance.JPG)
    
-   **Note**: the amount is in wei, so we have to add those extra zeros to make it ether unit.
+   **Note**: the amount is in Wei, so we have to add those extra zeros to make it an ether unit.
    
-   Once, hit the transact button. and it will add the account as the family member of the owner. Similary, add another account as family member with their wallet address and some amount. Let's say, member1 is getting 25 ethers and member 2 is getting 5 ethers.
+   Once, hit the transact button. and it will add the account as the family member of the owner. Similarly, add another account as a family member with their wallet address and some amount. Let's say, member 1 is getting 25 ethers and member 2 is getting 5 ethers.
    
-   **Remember**: While deploying the contract, the owner had given 30 ether. So, he can only set inheritance amount sum, upto 30 ether only. If you try to execute the tranction, with more then 30 ether, the contract will trow an error:
+   **Remember**: While deploying the contract, the owner had given 30 ether. So, he can only set the inheritance amount sum, up to 30 ether only. If you try to execute the transaction, with more than 30 ether, the contract will throw an error:
    
    
    
@@ -246,7 +246,7 @@ Objective: Create a Property Will Contract for a grandfather to distribute his p
    }
    ```
 
-10. By now, nothing have changed in the family member wallet address's amount, because the grandfather is not yet deceased. Let's say that, the sad day comes and the grandfather has passed away. To do so, we need to hit the **isDeceased** button. 
+10. By now, nothing have changed in the family member's wallet address's amount, because the grandfather is not yet deceased. Let's say that, the sad day comes and the grandfather has passed away. To do so, we need to hit the **isDeceased** button. 
     
     ```shell
     status	0x1 Transaction mined and execution succeed
@@ -264,7 +264,7 @@ Objective: Create a Property Will Contract for a grandfather to distribute his p
     logs	[]
     ```
 
-11. By now, you will see, the family account holders got increased some balance in their accounts:
+11. By now, you will see, that the family account holders have increased some balance in their accounts:
     
     ![](../Resources/Smart%20Contracts/Accounts-List2.JPG)
 

@@ -166,11 +166,11 @@ Objective: Create a Property Will Contract for a grandfather to distribute his p
    
    Under deploy, you see -
    
-   - Environment - We can select any env as per our need
+   - Environment - To deploy a smart contract, we need an environment that executes smart contracts and computes the state of network. In our case, we can use Remix provided VM i.e. Remix VM.
    
-   - Accounts - Test ether accounts to run our contracts upon.
+   - Accounts - Test ether accounts to run our contracts with.
    
-   - Gas Limit - Show the available gas fee amounts for your contracts.
+   - Gas Limit - Shows the available gas fee amounts for your contracts. It is a safety precaution that works to stop blocks from using too many computing resources. Transactions get rejected and excluded from the block if the total gas consumption of all the transaction in the block is more than the block gas limit.
    
    - Value - the amount of ether that the currently selected account is going to allocate into our smart contract. And eventually, it will become the **owner** of the contract. The value is in **wei**, which is smallest unit of ether.
      
@@ -224,7 +224,10 @@ Objective: Create a Property Will Contract for a grandfather to distribute his p
    
    Hit the transact button and it will add the account as the family member of the owner. Similarly, add another account as a family member with their wallet address and some amount. Let's say, member 1 is getting 25 ethers and member 2 is getting 5 ethers.
    
-   **Remember**: While deploying the contract, the owner had given 30 ether. So, he can only set the inheritance amount sum, up to 30 ethers. If you try to execute the transaction, with more than 30 ether, the contract will throw an error.
+   **Remember**: While deploying the contract, the owner had given 30 ether. So, he can only set the inheritance amount sum, up to 30 ethers.
+   (Grandpa's transaction to deploy the contract i.e. 30 >= Sum of amount to be transfered to each family member i.e. 25 + 5)
+
+   If you try to execute the transaction, with more than 30 ether, the contract will throw an error.
    
    Console output of the transaction.
    
@@ -245,7 +248,7 @@ Objective: Create a Property Will Contract for a grandfather to distribute his p
    }
    ```
 
-10. By now, nothing have changed in the family member's wallet address's amount, because the grandfather is not yet deceased. Let's say that, the sad day comes and the grandfather has passed away. To do so, we need to hit the **isDeceased** button. 
+11. By now, nothing have changed in the family member's wallet address's amount, because the grandfather is not yet deceased. Let's say that, the sad day comes and the grandfather has passed away. To do so, we need to hit the **isDeceased** button. 
     
     ```shell
     status	0x1 Transaction mined and execution succeed
@@ -263,7 +266,7 @@ Objective: Create a Property Will Contract for a grandfather to distribute his p
     logs	[]
     ```
 
-11. By now, you will see, that the family account holders have increased some balance in their accounts:
+12. By now, you will see, that the family account holders have increased some balance in their accounts:
     
     ![](../Resources/Smart%20Contracts/Accounts-List2.JPG)
 

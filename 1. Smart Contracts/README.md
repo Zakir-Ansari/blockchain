@@ -170,7 +170,7 @@ Objective: Create a Property Will Contract for a grandfather to distribute his p
    
    - Accounts - Test ether accounts to run our contracts with.
    
-   - Gas Limit - Shows the available gas fee amounts for your contracts. It is a safety precaution that works to stop blocks from using too many computing resources. Transactions get rejected and excluded from the block if the total gas consumption of all the transaction in the block is more than the block gas limit.
+   - Gas Limit - Shows the available gas fee amount for your contract. It is a safety precaution that works to stop blocks from using too many computing resources. Transactions get rejected and excluded from the block if the total gas consumption of all the transaction in the block is more than the block gas limit.
    
    - Value - the amount of ether that the currently selected account is going to allocate into our smart contract. And eventually, it will become the **owner** of the contract. The value is in **wei**, which is smallest unit of ether.
      

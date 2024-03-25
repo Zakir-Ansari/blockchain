@@ -259,7 +259,7 @@ Objective: Create a Property Will Contract for a grandfather to distribute his p
     
     ![](../Resources/Smart%20Contracts/Accounts-List2.JPG)
 
-This was an example of creating a smart contract on Remix IDE and using it's inbuild wallet to do the deployment and transactions. We can also use Metamask and use our own wallet to do the transations.
+This was an example of creating a smart contract on Remix IDE and using its inbuild wallet to do the deployment and transactions. We can also use Metamask and use our wallet to do the transactions.
 
 
 
@@ -307,14 +307,14 @@ contract ZToken is ERC20{
 }
 ```
 
-**Inheriting from the ERC20 contract**, gives us access to the [_mint()](https://docs.openzeppelin.com/contracts/4.x/api/token/erc20#ERC20-_mint-address-uint256-) method used to create new tokens, and send them to a given address, exactly what we need now.
+**Inheriting from the ERC20 contract**, gives us access to the [_mint()](https://docs.openzeppelin.com/contracts/4.x/api/token/erc20#ERC20-_mint-address-uint256-) method used to create new tokens and send them to a given address, exactly what we need now.
 
 Minting is defined as **the process of validating information**, creating a new block, and recording that information into the blockchain. Simply put, “mint” means: creating something, like a number of Tokens, or an NFT, and saving it on the blockchain.
 
 - **to:** address of the wallet/contract that will receive the tokens,
 - **amount:** amount of tokens to send.
 
-The **“to”** argument, is taken from [msg.sender](https://stackoverflow.com/questions/48562483/solidity-basics-what-msg-sender-stands-for), a special variable which value is the address of the wallet/contract calling the contract. The **amount**, on the other hand, needs to take care of the decimals, and that’s why we’re passing such a big number, let me go through it for a second.
+The **“to”** argument, is taken from [msg.sender](https://stackoverflow.com/questions/48562483/solidity-basics-what-msg-sender-stands-for), a special variable whose value is the address of the wallet/contract calling the contract. The **amount**, on the other hand, needs to take care of the decimals, and that’s why we’re passing such a big number, let me go through it for a second.
 
 
 
@@ -332,13 +332,13 @@ Now that we have our artifacts, click on the Ethereum logo under the Solidity ic
 
 ![](../Resources/Smart%20Contracts/ERC20-Deploy.gif)
 
-## Interaction with out token
+## Interaction with our token
 
 Remember? When deployed, our smart contract should have issued 1000 tokens to our wallet! If you watch, right above the Deploy button, there’s the “account” field:
 
 ![](../Resources/Smart%20Contracts/ERC20-Details.JPG)
 
-That’s the **address of the wallet we used to deploy our ERC20 Token contract**, we can say that because there’s some Ethereum missing, the Gas fees we paid to deploy the contract on the Ethereum Virtual Machine.
+That’s the **address of the wallet we used to deploy our ERC20 Token contract**, we can say that because some Ethereum is missing, the Gas fees we paid to deploy the contract on the Ethereum Virtual Machine.
 
 Under deployed section, you will see all ERC20 methods, that your contract inherited or implemented:
 
@@ -348,7 +348,7 @@ The color of the buttons represents whether the representing function modifies a
 
 
 
-To test the operations, lets take some account addresses:
+To test the operations, let's take some account addresses:
 
 ![](../Resources/Smart%20Contracts/ZToken-Addresses.JPG)
 
@@ -358,19 +358,19 @@ To test the operations, lets take some account addresses:
 
 - User 2: 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db
 
-First, let's see the balance owner is holding. Copy the owner account (using which, you deployed the contract). Select balanceOf dropdown and put the address in address input. Then press call button:
+First, let's see the balance the owner is holding. Copy the owner account (using which, you deployed the contract). Select balanceOf dropdown and put the address in the address input. Then press the call button:
 ![](../Resources/Smart%20Contracts/ZToken-Owner1-balance1.JPG)
 
-You can see owner is having all the minted tokens.
+You can see the owner has all the minted tokens.
 
-Now, let's transfer some token to User 1 and User2. To do that, select the user from account drop down and copy the address.
-Don't forget to reselect the original owner from account dropdown, because only owner is having the access to execut the contract and do the necessary operations.
+Now, let's transfer some tokens to User 1 and User 2. To do that, select the user from the account drop-down and copy the address.
+Don't forget to reselect the original owner from the account dropdown, because only the owner has the access to execute the contract and do the necessary operations.
 
 Open transfer dropdown form deployed contract functions and put user 1 address with an amount to be transferred.
 
 ![](../Resources/Smart%20Contracts/ZToken-Transfer-User1.JPG)
 
-Similarly transfer some amount to user 2:
+Similarly, transfer some amount to user 2:
 
 ![](../Resources/Smart%20Contracts/ZToken-Transfer-User2.JPG)
 
@@ -378,7 +378,7 @@ Congratulations! 🎉 You have successfully transfered your newly created tokens
 
 
 
-To check the balance, you can use the balanceOf funtions with respective user's address.
+To check the balance, you can use the balanceOf functions with the respective user's address.
 
 Owner
 

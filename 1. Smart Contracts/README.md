@@ -359,6 +359,7 @@ To test the operations, let's take some account addresses:
 - User 2: 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db
 
 First, let's see the balance the owner is holding. Copy the owner account (using which, you deployed the contract). Select balanceOf dropdown and put the address in the address input. Then press the call button:
+
 ![](../Resources/Smart%20Contracts/ZToken-Owner1-balance1.JPG)
 
 You can see the owner has all the minted tokens.

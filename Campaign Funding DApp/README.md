@@ -16,7 +16,7 @@ Before starting development, let's understand the tool and framework we are goin
 
 ![](../Resources/Campaign%20Funding%20DApp/Thirdweb-Logo.png)
 
-Thirdweb is an online platform that provides developer tools (SDK) to build, manage, and analyze web3 apps. It's a complete package with a clean UI and interactive pages to work with our DApps.
+Thirdweb is an online platform that provides developer tools to build, manage, and analyze web3 apps. It's a complete package that provides multiple SDKs with a clean UI and interactive pages to work with your DApps.
 
 
 

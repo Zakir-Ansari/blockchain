@@ -1,6 +1,6 @@
 # Campaign Funding (Decentralized Application)
 
-**Objective**: We are going to create a Campaign Fund Management Decentralized Application (DApp) to provide users and interface to create there Campaigns and raise funds for the same. 
+**Objective**: We are going to create a Campaign Fund Management Decentralized Application (DApp) to provide users an interface to create their Campaigns and raise funds for the same. 
 
 - Every Campaign will have a target fund amount and a target date to collect the amount.
 
@@ -10,13 +10,13 @@
 
 
 
-Before starting development, let's understand the toold and framework we are going to use while development process.
+Before starting development, let's understand the tool and framework we are going to use while the development process.
 
 ## Thirdweb
 
 ![](../Resources/Campaign%20Funding%20DApp/Thirdweb-Logo.png)
 
-Thirdweb is an online platform that provide developer tools (SDK) to build, manage and analyze web3 apps. It's a complete package with clean UI and interactive pages to work with our DApps.
+Thirdweb is an online platform that provides developer tools (SDK) to build, manage, and analyze web3 apps. It's a complete package with a clean UI and interactive pages to work with our DApps.
 
 
 
@@ -36,7 +36,7 @@ The Holesky testnet is replacing the Goerli testnet for the Ethereum network. Th
 
 Holesky ETH tokens are needed to interact with the Holesky network. You can currently claim Holesky tokens from the Holešky PoW Faucet and the Quicknode Faucet. We recommend the Holešky PoW Faucet, as you can claim a maximum of 33 HolETH, while Quicknode is limited to 5 HolETH.
 
-To add Holesky Testnet into your wallet, got to 'Add a Network Manually' and enter below details:
+To add Holesky Testnet to your wallet, go to 'Add a Network Manually' and enter below details:
 
 - **Network name**: Holesky Testnet
 - **Network URL**: [https://ethereum-holesky.publicnode.com](https://ethereum-holesky.publicnode.com/)
@@ -48,13 +48,13 @@ To add Holesky Testnet into your wallet, got to 'Add a Network Manually' and ent
 
 ## DApp Development
 
-Command to create smart contract application (DApp) using thirdweb:
+Command to create smart contract application (DApp) using Thirdweb:
 
 ```bash
 npx thirdweb@latest create --contract
 ```
 
-It will ask you the project detials like:
+It will ask you the project details like:
 
 ```bash
 tps://docs.safe.global/safe-core-aa-sdk/protocol-kit/reference/v1
@@ -104,7 +104,7 @@ Inside that directory, you can run several commands:
 
 ![](../Resources/Campaign%20Funding%20DApp/ThirdWebProjectStructure.JPG)
 
-**What did we got in our project -** 
+**What did we get in our project -** 
 
 **hardhat.config.ts**
 
@@ -175,13 +175,13 @@ module.exports = {
 }
 ```
 
-To keep our app as secure as possible, we are going to use dotenv, and keep our environment variable safe. To do so, install dotenv package:
+To keep our app as secure as possible, we are going to use dotenv and keep our environment variable safe. To do so, install dotenv package:
 
 ```bash
 npm install dotenv
 ```
 
-This will instantly add "dotenv": "^16.4.5" in dependencies
+This will instantly add "dotenv": "^16.4.5" in the dependencies
 
 ```json
 "dependencies": {
@@ -191,7 +191,7 @@ This will instantly add "dotenv": "^16.4.5" in dependencies
   }
 ```
 
-Now, it's time to work on our contract. Rename the Contract.sol file inside contract folder to CampaignFunding.sol and the code of our contract will look like this:
+Now, it's time to work on our contract. Rename the Contract.sol file inside the contract folder to CampaignFunding.sol and the code of our contract will look like this:
 
 ```solidity
 // SPDX-License-Identifier: UNLICENSED
@@ -284,25 +284,25 @@ But before anything, we have to have our own **Metamask Wallet**.
 
 Steps to configure your metamask:
 
-1. Go to https://metamask.io/ and download the metamask. That will redirect you to chrome webstor. Add the Metamask extension. Once the installation is done, get started page will appear.
+1. Go to https://metamask.io/ and download the metamask. That will redirect you to Chrome web store. Add the Metamask extension. Once the installation is done, the get started page will appear.
    
    ![](../Resources/Campaign%20Funding%20DApp/Metamask-Getstarted.JPG)
 
-2. Check the agreement and Create a new wallet. Follow the steps to create wallet.
+2. Check the agreement and Create a new wallet. Follow the steps to create a wallet.
 
 3. Once you are ready with your wallet -> add it to your extension for ease of access.
 
-4. You can now see you wallet appear like this:
+4. You can now see your wallet appear like this:
    
    ![](../Resources/Campaign%20Funding%20DApp/Metamask-wallet-home.JPG)
 
-5. Selecte Ethereum Mainnet and switch the toggle to show test networks. Then select 'Add network' and then use Holesky Testnet details (mentioned in Holesky section above) to add it.
+5. Select Ethereum Mainnet and switch the toggle to show test networks. Then select 'Add network' and then use Holesky Testnet details (mentioned in the Holesky section above) to add it.
 
 6. Now we have to get some funds. You can get free Sepolia and Holesky Faucets here: https://faucets.pk910.de/
 
-7. Once we get some funds, we are ready to start the deployment of our contract. For that, we will need our private key to use in our smart contract application. Click on account in your metamask wallet and follow the steps to fetch the private key.
+7. Once we get some funds, we are ready to start the deployment of our contract. For that, we will need our private key to use in our smart contract application. Click on the account in your metamask wallet and follow the steps to fetch the private key.
 
-8. Save your private key in env variable of your code. To do so, create a new .env file in your project and put the private key there.
+8. Save your private key in the env variable of your code. To do so, create a new .env file in your project and put the private key there.
    
    ```bash
    PRIVATE_KEY=<Your Private Key>
@@ -334,7 +334,7 @@ Steps to configure your metamask:
       },
     ```
 
-11. With that said, we can go ahead and deploy our contract. To deploy the contract, go to your contract project folder and and run `npm run deploy`
+11. With that said, we can go ahead and deploy our contract. To deploy the contract, go to your contract project folder and run `npm run deploy`
     
     ```powershell
     PS E:\Code_Space\VSCode\Blockchain\blockchain\Campaign Funding DApp\web3> npm run deploy
@@ -367,7 +367,7 @@ Steps to configure your metamask:
     
     ```
 
-12. The contract data is uploaded straight to the Thirdweb dashboard. You will see, new folders will get created in your project as artifact and cache. After all these, we have to now deploy our contract using the 'link to deploy contracts' in above console output. Go to the link and deploy the contract.
+12. The contract data is uploaded straight to the Thirdweb dashboard. You will see, that new folders will get created in your project as artifacts and cache. After all these, we have to now deploy our contract using the 'link to deploy contracts' in the above console output. Go to the link and deploy the contract.
     
     ![](../Resources/Campaign%20Funding%20DApp/Thirdweb-Deploy-Now.JPG)
     
@@ -377,9 +377,9 @@ Steps to configure your metamask:
     
     ![](../Resources/Campaign%20Funding%20DApp/Thirdweb-Deployed-Explorer.JPG)
     
-    Best part of Thirdweb is it's simplicity and polished GUI. You will have a good insight of your contract with interactive features.
+    The best part of Thirdweb is its simplicity and polished GUI. You will have a good insight into your contract with interactive features.
     
-    It also provides code snippet to give ease of use of this contract to any of your project (i.e. Javascript, React, Python and more)
+    It also provides code snippets to give ease of use of this contract to any of your projects (i.e. Javascript, React, Python, and more)
     
     ![](../Resources/Campaign%20Funding%20DApp/Thirdweb-Code-Snippet.JPG)
     
@@ -387,10 +387,8 @@ Steps to configure your metamask:
 
 
 
-With that said, the first part of our application, i.e. our contract has been developed, deployed and live on the internet with an address associated with it.
+With that said, the first part of our application, i.e. our contract has been developed, deployed, and live on the internet with an address associated with it.
 
-In the next part, we will see how interact with out contract, form other application.
+In the next part, we will see how to interact with our contract through other applications.
 
-
-
-## Client Developement
+## Client Development

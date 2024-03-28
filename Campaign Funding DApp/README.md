@@ -6,7 +6,7 @@
 
 - Every user will be able to login through their wallet and create campaigns.
 
-- Every user will be able to receive and transactions in Holesky currency.
+- Every user will be able to receive and transfer in Holesky currency.
 
 
 

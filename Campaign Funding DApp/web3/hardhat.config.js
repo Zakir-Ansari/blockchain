@@ -33,6 +33,14 @@ module.exports = {
   },
   solidity: {
     version: "0.8.17",
+    defaultNetwork: "holesky",
+    networks: {
+      hardhat: {},
+      holesky: {
+        url: "https://rpc.ankr.com/eth_holesky",
+        accounts: [`0x${process.env.PRIVATE_KEY}`],
+      },
+    },
     settings: {
       optimizer: {
         enabled: true,

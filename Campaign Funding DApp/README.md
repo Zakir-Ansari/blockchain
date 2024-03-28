@@ -1,6 +1,54 @@
 # Campaign Funding (Decentralized Application)
 
-Command to create smart contract application using thirdweb:
+**Objective**: We are going to create a Campaign Fund Management Decentralized Application (DApp) to provide users and interface to create there Campaigns and raise funds for the same. 
+
+- Every Campaign will have a target fund amount and a target date to collect the amount.
+
+- Every user will be able to login through their wallet and create campaigns.
+
+- Every user will be able to receive and transactions in Holesky currency.
+
+
+
+Before starting development, let's understand the toold and framework we are going to use while development process.
+
+## Thirdweb
+
+![](../Resources/Campaign%20Funding%20DApp/Thirdweb-Logo.png)
+
+Thirdweb is an online platform that provide developer tools (SDK) to build, manage and analyze web3 apps. It's a complete package with clean UI and interactive pages to work with our DApps.
+
+
+
+## Hardhat
+
+![](../Resources/Campaign%20Funding%20DApp/Hardhat-logo.jpg)
+
+It is an open-source Ethereum development environment for building and for testing smart contracts on the Ethereum [blockchain](https://shardeum.org/blog/what-is-blockchain/). It provides powerful tools and features, including a built-in Solidity compiler, testing framework, debugging tool, deployment tool, and plugin system. 
+
+With Hardhat, developers can write, compile, test, and deploy their smart contracts securely and efficiently. Its user-friendly interface and comprehensive documentation make it a popular choice among developers, whether they’re just starting or have years of experience in Ethereum development. Read more about it at [Documentation | Ethereum development environment for professionals by Nomic Foundation](https://hardhat.org/docs)
+
+## Holesky
+
+![](../Resources/Campaign%20Funding%20DApp/Holesky-Logo.png)
+
+The Holesky testnet is replacing the Goerli testnet for the Ethereum network. The new testnet will serve as a test environment for staking features, infrastructures, and protocols. The Sepolia testnet will remain the recommended testnet for EVM-related applications.
+
+Holesky ETH tokens are needed to interact with the Holesky network. You can currently claim Holesky tokens from the Holešky PoW Faucet and the Quicknode Faucet. We recommend the Holešky PoW Faucet, as you can claim a maximum of 33 HolETH, while Quicknode is limited to 5 HolETH.
+
+To add Holesky Testnet into your wallet, got to 'Add a Network Manually' and enter below details:
+
+- **Network name**: Holesky Testnet
+- **Network URL**: [https://ethereum-holesky.publicnode.com](https://ethereum-holesky.publicnode.com/)
+- **Chain ID**: 17000
+- **Currency symbol**: ETH
+- **Block explorer URL**: [https://holesky.beaconcha.in](https://holesky.beaconcha.in/)
+
+
+
+## DApp Development
+
+Command to create smart contract application (DApp) using thirdweb:
 
 ```bash
 npx thirdweb@latest create --contract
@@ -52,13 +100,13 @@ Inside that directory, you can run several commands:
     Publishes your contracts with the thirdweb publish flow.
 ```
 
-Project structure:
+**Project structure**:
 
 ![](../Resources/Campaign%20Funding%20DApp/ThirdWebProjectStructure.JPG)
 
-What do we have in our project - 
+**What did we got in our project -** 
 
-hardhat.config.ts
+**hardhat.config.ts**
 
 ```ts
 require("@matterlabs/hardhat-zksync-solc");
@@ -104,10 +152,9 @@ module.exports = {
     },
   },
 };
-
 ```
 
-package.json
+**package.json**
 
 ```json
 {
@@ -126,10 +173,9 @@ package.json
     "zksync-web3": "^0.14.3"
   }
 }
-
 ```
 
-To keep our app as secure as possible, we are going to use doenv, to keep our environment variable safe. To do so, install dotenv package
+To keep our app as secure as possible, we are going to use dotenv, and keep our environment variable safe. To do so, install dotenv package:
 
 ```bash
 npm install dotenv
@@ -145,7 +191,7 @@ This will instantly add "dotenv": "^16.4.5" in dependencies
   }
 ```
 
-Now, it's time to work on our contract. Rename the Contract.sol file inside contract folder to CampaignFunding.sol
+Now, it's time to work on our contract. Rename the Contract.sol file inside contract folder to CampaignFunding.sol and the code of our contract will look like this:
 
 ```solidity
 // SPDX-License-Identifier: UNLICENSED
@@ -233,8 +279,8 @@ contract CampaignFunding {
 }
 ```
 
-Now, that we are ready with our contract, we have to configure the deploy our smart contract using hardhat.config.js.
-But before anything, we have to have our own Metamask Wallet.
+Now, that we are ready with our contract, we have to configure the deployment of our smart contract using **hardhat.config.js**
+But before anything, we have to have our own **Metamask Wallet**.
 
 Steps to configure your metamask:
 
@@ -244,19 +290,107 @@ Steps to configure your metamask:
 
 2. Check the agreement and Create a new wallet. Follow the steps to create wallet.
 
-3. Once you are ready with your wallet -> add it your extension for ease of access.
+3. Once you are ready with your wallet -> add it to your extension for ease of access.
 
-4. You can now see you wallet appear right like this:
-   
-   
-   
-   
-   
-   
-   
+4. You can now see you wallet appear like this:
    
    ![](../Resources/Campaign%20Funding%20DApp/Metamask-wallet-home.JPG)
 
-5. Selecte Ethereum Mainnet and switch the toggle to show test networks. Then selected <TBD>
+5. Selecte Ethereum Mainnet and switch the toggle to show test networks. Then select 'Add network' and then use Holesky Testnet details (mentioned in Holesky section above) to add it.
 
-6. Now we have to get some funds. Copy the account address
+6. Now we have to get some funds. You can get free Sepolia and Holesky Faucets here: https://faucets.pk910.de/
+
+7. Once we get some funds, we are ready to start the deployment of our contract. For that, we will need our private key to use in our smart contract application. Click on account in your metamask wallet and follow the steps to fetch the private key.
+
+8. Save your private key in env variable of your code. To do so, create a new .env file in your project and put the private key there.
+   
+   ```bash
+   PRIVATE_KEY=<Your Private Key>
+   ```
+
+9. We are ready to use our private key, to connect to the Holesky or Sepolia network. Go to [Your Instant RPC Gateway to Ethereum](https://www.ankr.com/rpc/eth/). Select Testnet and then Holesky and copy the HTTPS endpoint.
+   
+   ![](../Resources/Campaign%20Funding%20DApp/RPC-ETH-Endpoints.JPG)
+
+10. Configure the endpoint in hardhad.config.js file like below:
+    
+    ```javascript
+    solidity: {
+        version: "0.8.17",
+        defaultNetwork: "holesky",
+        networks: {
+          hardhat: {},
+          holesky: {
+            url: "https://rpc.ankr.com/eth_holesky",
+            accounts: [`0x${process.env.PRIVATE_KEY}`],
+          },
+        },
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        },
+      },
+    ```
+
+11. With that said, we can go ahead and deploy our contract. To deploy the contract, go to your contract project folder and and run `npm run deploy`
+    
+    ```powershell
+    PS E:\Code_Space\VSCode\Blockchain\blockchain\Campaign Funding DApp\web3> npm run deploy
+    
+    > deploy
+    > npx thirdweb@latest deploy
+    
+        $$\     $$\       $$\                 $$\                         $$\       
+        $$ |    $$ |      \__|                $$ |                        $$ |      
+      $$$$$$\   $$$$$$$\  $$\  $$$$$$\   $$$$$$$ |$$\  $$\  $$\  $$$$$$\  $$$$$$$\  
+      \_$$  _|  $$  __$$\ $$ |$$  __$$\ $$  __$$ |$$ | $$ | $$ |$$  __$$\ $$  __$$\ 
+        $$ |    $$ |  $$ |$$ |$$ |  \__|$$ /  $$ |$$ | $$ | $$ |$$$$$$$$ |$$ |  $$ |
+        $$ |$$\ $$ |  $$ |$$ |$$ |      $$ |  $$ |$$ | $$ | $$ |$$   ____|$$ |  $$ |
+        \$$$$  |$$ |  $$ |$$ |$$ |      \$$$$$$$ |\$$$$$\$$$$  |\$$$$$$$\ $$$$$$$  |
+         \____/ \__|  \__|\__|\__|       \_______| \_____\____/  \_______|\_______/ 
+    
+     💎 thirdweb v0.13.56 💎
+    
+    Automatically attempting to open a link to authenticate with our dashboard...
+    
+    ⠴ Waiting for a response from the dashboard
+    
+    Successfully linked your account to this device
+    ✔ Detected project type: hardhat
+    ⠋ Compiling project...
+    ✔ Compilation successful
+    ✔ Processing contract: "CampaignFunding"
+    ✔ Upload successful
+    ✔ Open this link to deploy your contracts: https://thirdweb.com/contracts/deploy/QmXjgvsgm43uCqRoVE3pmKFG6v4rmVUazwpNURxKuKG9jE
+    
+    ```
+
+12. The contract data is uploaded straight to the Thirdweb dashboard. You will see, new folders will get created in your project as artifact and cache. After all these, we have to now deploy our contract using the 'link to deploy contracts' in above console output. Go to the link and deploy the contract.
+    
+    ![](../Resources/Campaign%20Funding%20DApp/Thirdweb-Deploy-Now.JPG)
+    
+    Click on **Deploy Now**, and you will get prompted by Metamask Wallet for the transaction required to deploy this contract. Follow the steps.
+
+13. After successful deployment, you will be redirected to the deployed contract Overview page. Navigate to Explorer and you will see your contract interactive functions:
+    
+    ![](../Resources/Campaign%20Funding%20DApp/Thirdweb-Deployed-Explorer.JPG)
+    
+    Best part of Thirdweb is it's simplicity and polished GUI. You will have a good insight of your contract with interactive features.
+    
+    It also provides code snippet to give ease of use of this contract to any of your project (i.e. Javascript, React, Python and more)
+    
+    ![](../Resources/Campaign%20Funding%20DApp/Thirdweb-Code-Snippet.JPG)
+    
+    **Note**: The hashcode below the contract name (CampaignFunding) is the address of our contract, that we use to connect it with any other application (UI or REST API).
+
+
+
+With that said, the first part of our application, i.e. our contract has been developed, deployed and live on the internet with an address associated with it.
+
+In the next part, we will see how interact with out contract, form other application.
+
+
+
+## Client Developement

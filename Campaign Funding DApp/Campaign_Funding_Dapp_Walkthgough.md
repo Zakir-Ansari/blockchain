@@ -1,14 +1,12 @@
 # Campaign Funding (Decentralized Application)
 
-**Objective**: We are going to create a Campaign Fund Management Decentralized Application (DApp) to provide users an interface to create their Campaigns and raise funds for the same. 
+**Objective**: We are going to create a Campaign Fund Management Decentralized Application (DApp) to provide users an interface to create their Campaigns and raise funds for the same.
 
 - Every Campaign will have a target fund amount and a target date to collect the amount.
 
 - Every user will be able to login through their wallet and create campaigns.
 
 - Every user will be able to receive and transfer in Holesky currency.
-
-
 
 Before starting development, let's understand the tool and framework we are going to use while the development process.
 
@@ -18,13 +16,11 @@ Before starting development, let's understand the tool and framework we are goin
 
 Thirdweb is an online platform that provides developer tools to build, manage, and analyze web3 apps. It's a complete package that provides multiple SDKs with a clean UI and interactive pages to work with your DApps.
 
-
-
 ## Hardhat
 
 ![](../Resources/Campaign%20Funding%20DApp/Hardhat-logo.jpg)
 
-It is an open-source Ethereum development environment for building and for testing smart contracts on the Ethereum [blockchain](https://shardeum.org/blog/what-is-blockchain/). It provides powerful tools and features, including a built-in Solidity compiler, testing framework, debugging tool, deployment tool, and plugin system. 
+It is an open-source Ethereum development environment for building and for testing smart contracts on the Ethereum [blockchain](https://shardeum.org/blog/what-is-blockchain/). It provides powerful tools and features, including a built-in Solidity compiler, testing framework, debugging tool, deployment tool, and plugin system.
 
 With Hardhat, developers can write, compile, test, and deploy their smart contracts securely and efficiently. Its user-friendly interface and comprehensive documentation make it a popular choice among developers, whether they’re just starting or have years of experience in Ethereum development. Read more about it at [Documentation | Ethereum development environment for professionals by Nomic Foundation](https://hardhat.org/docs)
 
@@ -44,8 +40,6 @@ To add Holesky Testnet to your wallet, go to 'Add a Network Manually' and enter 
 - **Currency symbol**: ETH
 - **Block explorer URL**: [https://holesky.beaconcha.in](https://holesky.beaconcha.in/)
 
-
-
 ## DApp Development
 
 Command to create smart contract application (DApp) using Thirdweb:
@@ -59,20 +53,20 @@ It will ask you the project details like:
 ```bash
 tps://docs.safe.global/safe-core-aa-sdk/protocol-kit/reference/v1
 
-    $$\     $$\       $$\                 $$\                         $$\       
-    $$ |    $$ |      \__|                $$ |                        $$ |      
-  $$$$$$\   $$$$$$$\  $$\  $$$$$$\   $$$$$$$ |$$\  $$\  $$\  $$$$$$\  $$$$$$$\  
-  \_$$  _|  $$  __$$\ $$ |$$  __$$\ $$  __$$ |$$ | $$ | $$ |$$  __$$\ $$  __$$\ 
+    $$\     $$\       $$\                 $$\                         $$\
+    $$ |    $$ |      \__|                $$ |                        $$ |
+  $$$$$$\   $$$$$$$\  $$\  $$$$$$\   $$$$$$$ |$$\  $$\  $$\  $$$$$$\  $$$$$$$\
+  \_$$  _|  $$  __$$\ $$ |$$  __$$\ $$  __$$ |$$ | $$ | $$ |$$  __$$\ $$  __$$\
     $$ |    $$ |  $$ |$$ |$$ |  \__|$$ /  $$ |$$ | $$ | $$ |$$$$$$$$ |$$ |  $$ |
     $$ |$$\ $$ |  $$ |$$ |$$ |      $$ |  $$ |$$ | $$ | $$ |$$   ____|$$ |  $$ |
-    \$$$$  |$$ |  $$ |$$ |$$ |      \$$$$$$$ |\$$$$$\$$$$  |\$$$$$$$\ $$$$$$$  |     
-     \____/ \__|  \__|\__|\__|       \_______| \_____\____/  \_______|\_______/ 
+    \$$$$  |$$ |  $$ |$$ |$$ |      \$$$$$$$ |\$$$$$\$$$$  |\$$$$$$$\ $$$$$$$  |
+     \____/ \__|  \__|\__|\__|       \_______| \_____\____/  \_______|\_______/
 
  💎 thirdweb v0.13.55 💎
 
 √ What is your project named? ... web3
 √ What framework do you want to use? » Hardhat
-√ What will be the name of your new smart contract? ... CampaignFundContract    
+√ What will be the name of your new smart contract? ... CampaignFundContract
 √ What type of contract do you want to start from? » Empty Contract
 Creating a new thirdweb contracts project in E:\Code_Space\VSCode\Blockchain\blockchain\Campaign Funding DApp\web3.
 
@@ -104,7 +98,7 @@ Inside that directory, you can run several commands:
 
 ![](../Resources/Campaign%20Funding%20DApp/ThirdWebProjectStructure.JPG)
 
-**What did we get in our project -** 
+**What did we get in our project -**
 
 **hardhat.config.ts**
 
@@ -199,6 +193,7 @@ pragma solidity ^0.8.9;
 
 contract CampaignFunding {
     struct Campaign {
+        uint256 id; // Campaign ID
         address owner;
         string title;
         string description;
@@ -210,10 +205,13 @@ contract CampaignFunding {
         string image;
         address[] donators;
         uint256[] donations;
+        bool isDeleted; // Flag to mark campaign as deleted
     }
 
     // create an object of campaigns
     mapping(uint256 => Campaign) public campaigns;
+
+    event CampaignDeleted(uint256 id);
 
     uint256 public numberOfCampaigns = 0;
 
@@ -225,20 +223,21 @@ contract CampaignFunding {
         uint256 _deadline,
         string memory _image
     ) public returns (uint256) {
-        Campaign storage campaign = campaigns[numberOfCampaigns];
-
         require(
-            campaign.deadline < block.timestamp,
+            (_deadline / 1000) > block.timestamp,
             "The deadline should be a date in the future."
         );
 
+        Campaign storage campaign = campaigns[numberOfCampaigns];
+        campaign.id = numberOfCampaigns;
         campaign.owner = _owner;
         campaign.title = _title;
         campaign.description = _description;
         campaign.target = _target;
-        campaign.deadline = _deadline;
+        campaign.deadline = _deadline / 1000;
         campaign.amountCollected = 0;
         campaign.image = _image;
+        campaign.isDeleted = false;
 
         numberOfCampaigns++;
 
@@ -246,9 +245,16 @@ contract CampaignFunding {
     }
 
     function donateToCampaign(uint256 _id) public payable {
+
         uint256 amount = msg.value;
 
         Campaign storage campaign = campaigns[_id];
+        require(!campaign.isDeleted, "Campaign is deleted!");
+        require(
+            campaign.deadline > block.timestamp,
+            "Campaign is not active!"
+        );
+
 
         campaign.donators.push(msg.sender);
         campaign.donations.push(amount);
@@ -276,6 +282,16 @@ contract CampaignFunding {
 
         return allCampaigns;
     }
+
+    function deleteCampaign(uint256 _id) public {
+        Campaign storage campaign = campaigns[_id];
+
+        require(campaign.owner == msg.sender, "Only the owner can delete the campaign.");
+        require(!campaign.isDeleted, "Campaign is already deleted.");
+
+        campaign.isDeleted = true;
+        emit CampaignDeleted(_id);
+    }
 }
 ```
 
@@ -285,7 +301,7 @@ But before anything, we have to have our own **Metamask Wallet**.
 Steps to configure your metamask:
 
 1. Go to https://metamask.io/ and download the metamask. That will redirect you to Chrome web store. Add the Metamask extension. Once the installation is done, the get started page will appear.
-   
+
    ![](../Resources/Campaign%20Funding%20DApp/Metamask-Getstarted.JPG)
 
 2. Check the agreement and Create a new wallet. Follow the steps to create a wallet.
@@ -293,7 +309,7 @@ Steps to configure your metamask:
 3. Once you are ready with your wallet -> add it to your extension for ease of access.
 
 4. You can now see your wallet appear like this:
-   
+
    ![](../Resources/Campaign%20Funding%20DApp/Metamask-wallet-home.JPG)
 
 5. Select Ethereum Mainnet and switch the toggle to show test networks. Then select 'Add network' and then use Holesky Testnet details (mentioned in the Holesky section above) to add it.
@@ -303,17 +319,17 @@ Steps to configure your metamask:
 7. Once we get some funds, we are ready to start the deployment of our contract. For that, we will need our private key to use in our smart contract application. Click on the account in your metamask wallet and follow the steps to fetch the private key.
 
 8. Save your private key in the env variable of your code. To do so, create a new .env file in your project and put the private key there.
-   
+
    ```bash
    PRIVATE_KEY=<Your Private Key>
    ```
 
 9. We are ready to use our private key, to connect to the Holesky or Sepolia network. Go to [Your Instant RPC Gateway to Ethereum](https://www.ankr.com/rpc/eth/). Select Testnet and then Holesky and copy the HTTPS endpoint.
-   
+
    ![](../Resources/Campaign%20Funding%20DApp/RPC-ETH-Endpoints.JPG)
 
 10. Configure the endpoint in hardhad.config.js file like below:
-    
+
     ```javascript
     solidity: {
         version: "0.8.17",
@@ -335,28 +351,28 @@ Steps to configure your metamask:
     ```
 
 11. With that said, we can go ahead and deploy our contract. To deploy the contract, go to your contract project folder and run `npm run deploy`
-    
+
     ```powershell
     PS E:\Code_Space\VSCode\Blockchain\blockchain\Campaign Funding DApp\web3> npm run deploy
-    
+
     > deploy
     > npx thirdweb@latest deploy
-    
-        $$\     $$\       $$\                 $$\                         $$\       
-        $$ |    $$ |      \__|                $$ |                        $$ |      
-      $$$$$$\   $$$$$$$\  $$\  $$$$$$\   $$$$$$$ |$$\  $$\  $$\  $$$$$$\  $$$$$$$\  
-      \_$$  _|  $$  __$$\ $$ |$$  __$$\ $$  __$$ |$$ | $$ | $$ |$$  __$$\ $$  __$$\ 
+
+        $$\     $$\       $$\                 $$\                         $$\
+        $$ |    $$ |      \__|                $$ |                        $$ |
+      $$$$$$\   $$$$$$$\  $$\  $$$$$$\   $$$$$$$ |$$\  $$\  $$\  $$$$$$\  $$$$$$$\
+      \_$$  _|  $$  __$$\ $$ |$$  __$$\ $$  __$$ |$$ | $$ | $$ |$$  __$$\ $$  __$$\
         $$ |    $$ |  $$ |$$ |$$ |  \__|$$ /  $$ |$$ | $$ | $$ |$$$$$$$$ |$$ |  $$ |
         $$ |$$\ $$ |  $$ |$$ |$$ |      $$ |  $$ |$$ | $$ | $$ |$$   ____|$$ |  $$ |
         \$$$$  |$$ |  $$ |$$ |$$ |      \$$$$$$$ |\$$$$$\$$$$  |\$$$$$$$\ $$$$$$$  |
-         \____/ \__|  \__|\__|\__|       \_______| \_____\____/  \_______|\_______/ 
-    
+         \____/ \__|  \__|\__|\__|       \_______| \_____\____/  \_______|\_______/
+
      💎 thirdweb v0.13.56 💎
-    
+
     Automatically attempting to open a link to authenticate with our dashboard...
-    
+
     ⠴ Waiting for a response from the dashboard
-    
+
     Successfully linked your account to this device
     ✔ Detected project type: hardhat
     ⠋ Compiling project...
@@ -364,28 +380,25 @@ Steps to configure your metamask:
     ✔ Processing contract: "CampaignFunding"
     ✔ Upload successful
     ✔ Open this link to deploy your contracts: https://thirdweb.com/contracts/deploy/QmXjgvsgm43uCqRoVE3pmKFG6v4rmVUazwpNURxKuKG9jE
-    
     ```
 
 12. The contract data is uploaded straight to the Thirdweb dashboard. You will see, that new folders will get created in your project as artifacts and cache. After all these, we have to now deploy our contract using the 'link to deploy contracts' in the above console output. Go to the link and deploy the contract.
-    
+
     ![](../Resources/Campaign%20Funding%20DApp/Thirdweb-Deploy-Now.JPG)
-    
+
     Click on **Deploy Now**, and you will get prompted by Metamask Wallet for the transaction required to deploy this contract. Follow the steps.
 
 13. After successful deployment, you will be redirected to the deployed contract Overview page. Navigate to Explorer and you will see your contract interactive functions:
-    
+
     ![](../Resources/Campaign%20Funding%20DApp/Thirdweb-Deployed-Explorer.JPG)
-    
+
     The best part of Thirdweb is its simplicity and polished GUI. You will have a good insight into your contract with interactive features.
-    
+
     It also provides code snippets to give ease of use of this contract to any of your projects (i.e. Javascript, React, Python, and more)
-    
+
     ![](../Resources/Campaign%20Funding%20DApp/Thirdweb-Code-Snippet.JPG)
-    
+
     **Note**: The hashcode below the contract name (CampaignFunding) is the address of our contract, that we use to connect it with any other application (UI or REST API).
-
-
 
 With that said, the first part of our application, i.e. our contract has been developed, deployed, and live on the internet with an address associated with it.
 

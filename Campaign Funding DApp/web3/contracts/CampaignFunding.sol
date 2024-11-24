@@ -3,6 +3,7 @@ pragma solidity ^0.8.9;
 
 contract CampaignFunding {
     struct Campaign {
+        uint256 id; // Campaign ID
         address owner;
         string title;
         string description;
@@ -14,10 +15,13 @@ contract CampaignFunding {
         string image;
         address[] donators;
         uint256[] donations;
+        bool isDeleted; // Flag to mark campaign as deleted
     }
 
     // create an object of campaigns
     mapping(uint256 => Campaign) public campaigns;
+
+    event CampaignDeleted(uint256 id);
 
     uint256 public numberOfCampaigns = 0;
 
@@ -29,20 +33,21 @@ contract CampaignFunding {
         uint256 _deadline,
         string memory _image
     ) public returns (uint256) {
-        Campaign storage campaign = campaigns[numberOfCampaigns];
-
         require(
-            campaign.deadline < block.timestamp,
+            (_deadline / 1000) > block.timestamp,
             "The deadline should be a date in the future."
         );
 
+        Campaign storage campaign = campaigns[numberOfCampaigns];
+        campaign.id = numberOfCampaigns;
         campaign.owner = _owner;
         campaign.title = _title;
         campaign.description = _description;
         campaign.target = _target;
-        campaign.deadline = _deadline;
+        campaign.deadline = _deadline / 1000;
         campaign.amountCollected = 0;
         campaign.image = _image;
+        campaign.isDeleted = false;
 
         numberOfCampaigns++;
 
@@ -50,9 +55,16 @@ contract CampaignFunding {
     }
 
     function donateToCampaign(uint256 _id) public payable {
+
         uint256 amount = msg.value;
 
         Campaign storage campaign = campaigns[_id];
+        require(!campaign.isDeleted, "Campaign is deleted!");
+        require(
+            campaign.deadline > block.timestamp,
+            "Campaign is not active!"
+        );
+
 
         campaign.donators.push(msg.sender);
         campaign.donations.push(amount);
@@ -79,5 +91,15 @@ contract CampaignFunding {
         }
 
         return allCampaigns;
+    }
+
+    function deleteCampaign(uint256 _id) public {
+        Campaign storage campaign = campaigns[_id];
+
+        require(campaign.owner == msg.sender, "Only the owner can delete the campaign.");
+        require(!campaign.isDeleted, "Campaign is already deleted.");
+
+        campaign.isDeleted = true;
+        emit CampaignDeleted(_id);
     }
 }

@@ -1,5 +1,5 @@
 module.exports = (req, res, next) => {
-  const accessId = req.headers["app-access-id"];
+  const accessId = req.headers["app_access_id"];
   const secretKey = process.env.SECRET_KEY;
 
   if (!accessId || accessId !== secretKey) {

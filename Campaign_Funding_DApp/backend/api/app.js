@@ -1,12 +1,30 @@
+require("dotenv").config();
 const express = require("express");
+const bodyParser = require("body-parser");
+const campaignFundingRoutes = require("./routes/campaignFunding");
+const validateAppAccess = require("./middlewares/validateAppAccess");
+const errorHandler = require("./middlewares/errorHandler");
+
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.get("/", (req, res) =>
-  res.send({
-    status: "Active",
-  })
-);
+// Middleware
+app.use(bodyParser.json());
 
-app.listen(3000, () => console.log("Server ready on port 3000."));
+// Public route for app status
+app.get("/", (req, res) => {
+  res.status(200).json({ status: "Active" });
+});
 
-module.exports = app;
+// Apply validation middleware to all other routes
+app.use(validateAppAccess);
+
+// Routes
+app.use("/api/campaignFunding", campaignFundingRoutes);
+
+// Global Error Handler
+app.use(errorHandler);
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

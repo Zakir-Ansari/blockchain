@@ -25,7 +25,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 app.use(validateAppAccess);
 
 // Routes
-app.use("/api/campaignFunding", campaignFundingRoutes);
+app.use("/api", campaignFundingRoutes);
 
 // Global Error Handler
 app.use(errorHandler);

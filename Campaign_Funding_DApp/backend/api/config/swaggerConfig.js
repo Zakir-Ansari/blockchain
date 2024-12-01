@@ -1,18 +1,27 @@
 const swaggerJsdoc = require("swagger-jsdoc");
 const path = require("path");
 
+const isVercel = process.env.VERCEL === "1"; // Checks if the app is running on Vercel
+
+const serverUrl = isVercel
+  ? "https://campaign-funding-api.vercel.app" // Vercel URL
+  : "http://localhost:3000"; // Local development URL
+
 const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Employee Management API",
+      title: "Campaign Funding API",
       version: "1.0.0",
-      description: "API documentation for the Employee Management system",
+      description:
+        "API for managing campaign funding in blockchain holesky network.",
     },
     servers: [
       {
-        url: "https://campaign-funding-api.vercel.app",
-        description: "Development server",
+        url: serverUrl,
+        description: isVercel
+          ? "Production server (Vercel)"
+          : "Development server (localhost)",
       },
     ],
     components: {

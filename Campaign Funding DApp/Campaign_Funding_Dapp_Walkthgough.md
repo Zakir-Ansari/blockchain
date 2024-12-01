@@ -224,7 +224,7 @@ contract CampaignFunding {
         string memory _image
     ) public returns (uint256) {
         require(
-            (_deadline / 1000) > block.timestamp,
+            _deadline > block.timestamp,
             "The deadline should be a date in the future."
         );
 
@@ -234,7 +234,7 @@ contract CampaignFunding {
         campaign.title = _title;
         campaign.description = _description;
         campaign.target = _target;
-        campaign.deadline = _deadline / 1000;
+        campaign.deadline = _deadline;
         campaign.amountCollected = 0;
         campaign.image = _image;
         campaign.isDeleted = false;

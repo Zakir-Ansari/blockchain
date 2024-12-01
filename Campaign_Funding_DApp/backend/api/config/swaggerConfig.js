@@ -1,4 +1,5 @@
 const swaggerJsdoc = require("swagger-jsdoc");
+const path = require("path");
 
 console.log("SWAGGER PATH:", __dirname);
 
@@ -32,7 +33,7 @@ const options = {
       },
     ],
   },
-  apis: ["./routes/*.js"], // Path to your route files for annotations
+  apis: [path.join(__dirname, "../routes/*.js")], // Path to your route files for annotations
 };
 
 const specs = swaggerJsdoc(options);

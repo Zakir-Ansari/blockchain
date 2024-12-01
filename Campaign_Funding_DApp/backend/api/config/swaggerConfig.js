@@ -1,8 +1,6 @@
 const swaggerJsdoc = require("swagger-jsdoc");
 const path = require("path");
 
-console.log("SWAGGER PATH:", __dirname);
-
 const options = {
   definition: {
     openapi: "3.0.0",

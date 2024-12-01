@@ -7,8 +7,6 @@ const campaignFundingRoutes = require("./routes/campaignFunding");
 const validateAppAccess = require("./middlewares/validateAppAccess");
 const errorHandler = require("./middlewares/errorHandler");
 
-console.log("APP PATH:", __dirname);
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -22,7 +20,6 @@ app.get("/", (req, res) => {
 
 // Swagger UI setup
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
-console.log("Swagger configuration:", JSON.stringify(swaggerSpecs));
 
 // Apply validation middleware to all other routes
 app.use(validateAppAccess);

@@ -10,7 +10,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "https://campaign-funding-api.vercel.app",
         description: "Development server",
       },
     ],
@@ -30,7 +30,7 @@ const options = {
       },
     ],
   },
-  apis: ["/api/routes/*.js"], // Path to your route files for annotations
+  apis: ["./routes/*.js"], // Path to your route files for annotations
 };
 
 const specs = swaggerJsdoc(options);

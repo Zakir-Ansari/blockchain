@@ -39,6 +39,73 @@ const options = {
         AppKeyAuth: [], // Apply AppKeyAuth to all endpoints by default
       },
     ],
+    paths: {
+      "/api/campaigns": {
+        get: {
+          summary: "Retrieve all campaigns",
+          description: "Fetches the list of all available campaigns.",
+          responses: {
+            200: {
+              description: "List of campaigns",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        id: { type: "string", example: "0" },
+                        owner: {
+                          type: "string",
+                          example: "0x1234567890abcdef",
+                        },
+                        title: { type: "string", example: "Test Campaign" },
+                        description: {
+                          type: "string",
+                          example: "A sample campaign",
+                        },
+                        target: { type: "string", example: "1000000" },
+                        deadline: { type: "string", example: "1734691741" },
+                        amountCollected: { type: "string", example: "0" },
+                        image: {
+                          type: "string",
+                          example: "https://example.com/image.png",
+                        },
+                        donators: {
+                          type: "array",
+                          items: { type: "string" },
+                        },
+                        donations: {
+                          type: "array",
+                          items: { type: "string" },
+                        },
+                        isDeleted: { type: "boolean", example: false },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            500: {
+              description: "Internal server error",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "object",
+                    properties: {
+                      message: {
+                        type: "string",
+                        example: "Internal server error",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   },
   apis: [path.join(__dirname, "../routes/*.js")], // Path to your route files for annotations
 };

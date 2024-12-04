@@ -1,1 +1,6 @@
-<h1>App works!</h1>
+@if(!isLoggedIn) {
+<button (click)="connectWallet()">Connect MetaMask</button>
+} @else {
+<p>Logged in as: {{ walletAddress }}</p>
+<p>Balance: {{ walletBalance }} ETH</p>
+}

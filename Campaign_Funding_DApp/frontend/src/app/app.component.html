@@ -1,8 +1,11 @@
 <nav class="col-md-10 offset-md-1 navbar bg-transparent">
-    <a class="navbar-brand text-light fs-2 fw-bolder cursor-p d-flex">
+    <a class="navbar-brand text-light fs-2 fw-bolder cursor-p d-flex" routerLink="/">
         <img class="align-self-center me-2" src="assets/logo.svg" alt="" srcset="" height="40" width="40">
         Campaign Funding</a>
-    <form class="d-flex text-light" role="search">
-        <button class="btn btn-dark" type="submit">Search</button>
-    </form>
+    <div class="d-flex text-light">
+        <button class="btn btn-dark" type="button" routerLink="/campaign">Search</button>
+    </div>
 </nav>
+<div class="col-md-10 offset-md-1 text-light">
+    <router-outlet></router-outlet>
+</div>

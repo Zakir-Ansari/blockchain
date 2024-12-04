@@ -69,10 +69,12 @@ body {
   cursor: pointer;
 }
 
-.card {
+.campaign-card {
   --radius: 12px;
   padding: 0px;
   border-radius: var(--radius);
+  scale: 0.95;
+  transition: 0.2s;
   img {
     border-top-left-radius: var(--radius);
     border-top-right-radius: var(--radius);
@@ -83,4 +85,9 @@ body {
   .card-title {
     font-weight: bold;
   }
+}
+
+.campaign-card:hover {
+  scale: 1;
+  transition: 0.2s;
 }

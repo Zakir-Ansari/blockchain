@@ -1,6 +1,8 @@
-@if(!isLoggedIn) {
-<button (click)="connectWallet()">Connect MetaMask</button>
-} @else {
-<p>Logged in as: {{ walletAddress }}</p>
-<p>Balance: {{ walletBalance }} ETH</p>
-}
+<nav class="col-md-10 offset-md-1 navbar bg-transparent">
+    <a class="navbar-brand text-light fs-2 fw-bolder cursor-p d-flex">
+        <img class="align-self-center me-2" src="assets/logo.svg" alt="" srcset="" height="40" width="40">
+        Campaign Funding</a>
+    <form class="d-flex text-light" role="search">
+        <button class="btn btn-dark" type="submit">Search</button>
+    </form>
+</nav>

@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CampaignService } from './services/campaign/campaign.service';
 import { MetaMaskService } from './services/metamask/meta-mask.service';
-import { ethers } from 'ethers';
 
 @Component({
   selector: 'app-root',

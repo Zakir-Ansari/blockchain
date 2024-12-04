@@ -16,6 +16,8 @@ export class MetaMaskService {
   account$ = this.accountSubject.asObservable();
   balance$ = this.balanceSubject.asObservable();
 
+  private balancePollingInterval: any = null;
+
   constructor() {
     this.initializeProvider();
   }
@@ -74,8 +76,12 @@ export class MetaMaskService {
     this.accountSubject.next(account);
     if (account) {
       await this.fetchBalance(account);
+      // Start polling for balance updates
+      this.startBalancePolling(account);
     } else {
       this.balanceSubject.next(null);
+      // Stop polling if no account is connected
+      this.stopBalancePolling();
     }
   }
 
@@ -85,6 +91,24 @@ export class MetaMaskService {
       const balance = await ethersProvider.getBalance(account);
       const formattedBalance = ethers.formatEther(balance); // Convert balance to Ether format
       this.balanceSubject.next(formattedBalance);
+    }
+  }
+
+  private startBalancePolling(account: string) {
+    if (this.balancePollingInterval) {
+      clearInterval(this.balancePollingInterval);
+    }
+
+    // Poll the balance every 10 seconds
+    this.balancePollingInterval = setInterval(async () => {
+      await this.fetchBalance(account);
+    }, 10000);
+  }
+
+  private stopBalancePolling() {
+    if (this.balancePollingInterval) {
+      clearInterval(this.balancePollingInterval);
+      this.balancePollingInterval = null;
     }
   }
 

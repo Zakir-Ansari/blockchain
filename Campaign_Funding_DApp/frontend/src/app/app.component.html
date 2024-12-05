@@ -1,9 +1,35 @@
 <nav class="col-md-10 offset-md-1 navbar bg-transparent">
     <a class="navbar-brand text-light fs-2 fw-bolder cursor-p d-flex" routerLink="/">
         <img class="align-self-center me-2" src="assets/svgs/logo.svg" alt="" srcset="" height="40" width="40">
-        Campaign Funding</a>
-    <div class="d-flex text-light">
-        <button class="btn btn-dark" type="button" routerLink="/campaign">Search</button>
+        <span class="align-self-center app-title">Campaign Funding</span></a>
+    <div class="d-flex text-light" style="float: right;">
+        @if(!isLoggedIn) {
+        <button type="button" class="btn btn-dark" (click)="connectWallet()" data-bs-placement="bottom"
+            data-bs-toggle="tooltip" data-bs-title="Connect Metamask">
+            <img class="me-1" width="20" height="20" src="https://img.icons8.com/color/48/metamask-logo.png"
+                alt="metamask-logo" />
+            Connect
+        </button>
+        } @else {
+        <div class="btn-group">
+            <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"
+                data-bs-display="static" aria-expanded="false">
+                <img class="me-1" width="20" height="20" src="https://img.icons8.com/color/48/metamask-logo.png"
+                    alt="metamask-logo" />
+                Connected
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-end">
+                <li class="dropdown-item">
+                    <span class="fw-bold me-1">Address:</span><span>{{ walletAddress }}</span>
+                </li>
+                <li class="dropdown-item">
+                    <span class="fw-bold me-1">Balance:</span><span class="fs-3 fw-bold me-1">{{ walletBalance
+                        }}</span><span class="text-secondary">ETH</span>
+                </li>
+            </ul>
+        </div>
+        }
+
     </div>
 </nav>
 <div class="col-md-10 offset-md-1 text-light">

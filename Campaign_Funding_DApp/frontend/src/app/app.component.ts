@@ -19,7 +19,7 @@ declare const bootstrap: any; // Required to use Bootstrap JS
   styleUrl: './app.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
   campaignService = inject(CampaignService);
   metaMaskService = inject(MetaMaskService);
   title = 'campaign-funding-app';
@@ -33,16 +33,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
 
     this.metaMaskService.balance$.subscribe((balance) => {
-      this.walletBalance = Number(balance).toFixed(6);
-    });
-  }
-
-  ngAfterViewInit(): void {
-    const tooltipTriggerList = document.querySelectorAll(
-      '[data-bs-toggle="tooltip"]'
-    );
-    tooltipTriggerList.forEach((tooltipTriggerEl) => {
-      new bootstrap.Tooltip(tooltipTriggerEl);
+      this.walletBalance = Number(balance).toFixed(3);
     });
   }
 

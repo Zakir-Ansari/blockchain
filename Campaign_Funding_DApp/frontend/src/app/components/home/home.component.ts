@@ -47,6 +47,13 @@ export class HomeComponent implements OnInit {
       return;
     }
     console.log('Form Submitted', this.campaignForm.value);
+    this.toastService.showToast(
+      'Success',
+      'Campaign created!',
+      'check',
+      5000,
+      'top-0 start-50 translate-middle-x'
+    );
     this.resetCampaignForm();
   }
 

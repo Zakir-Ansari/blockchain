@@ -22,7 +22,7 @@ export class ToastService {
   }
 
   // Updates the position of the toast container
-  setPosition(position: string) {
+  private setPosition(position: string) {
     const container = document.getElementById(this.toastContainerId);
     if (container) {
       container.className = `toast-container position-fixed ${position} p-3`;

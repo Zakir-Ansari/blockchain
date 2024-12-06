@@ -8,13 +8,14 @@ import {
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { CampaignService } from './services/campaign/campaign.service';
 import { MetaMaskService } from './services/metamask/meta-mask.service';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 declare const bootstrap: any; // Required to use Bootstrap JS
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink],
+  imports: [RouterOutlet, RouterLink, TruncatePipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   encapsulation: ViewEncapsulation.None,

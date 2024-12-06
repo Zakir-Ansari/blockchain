@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import {
-  FormGroup,
   FormControl,
+  FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ToastService } from '../../services/shared/toast/toast.service';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +18,7 @@ import {
 })
 export class HomeComponent implements OnInit {
   // services
+  toastService = inject(ToastService);
 
   // variables
   campaignForm!: FormGroup;

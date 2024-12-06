@@ -20,7 +20,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-end">
                 <li class="dropdown-item">
-                    <span class="fw-bold me-1">Address:</span><span>{{ walletAddress }}</span>
+                    <span class="fw-bold me-1">Address:</span><span>{{ walletAddress ?? '' | truncate:7:4 }}</span>
                 </li>
                 <li class="dropdown-item">
                     <span class="fw-bold me-1">Balance:</span><span class="fs-3 fw-bold me-1">{{ walletBalance

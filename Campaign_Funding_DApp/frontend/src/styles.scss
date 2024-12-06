@@ -70,7 +70,7 @@ body {
 }
 
 .campaign-card {
-  --radius: 12px;
+  --radius: 10px;
   padding: 0px;
   border-radius: var(--radius);
   scale: 0.95;
@@ -87,7 +87,10 @@ body {
   }
 }
 
-.campaign-card:hover {
-  scale: 1;
-  transition: 0.2s;
+// for all mobile screens
+@media screen and (min-width: 768px) {
+  .campaign-card:hover {
+    scale: 1;
+    transition: 0.2s;
+  }
 }

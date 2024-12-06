@@ -7,38 +7,48 @@
             <div class="card shadow-lg">
                 <div class="card-body mx-1">
                     <span class="card-title fw-bolder fs-3">Create a Campaign</span>
-                    <div class="my-3">
-                        <label for="exampleFormControlInput1" class="form-label fw-bolder">Title</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1"
-                            placeholder="Campaign Title">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label fw-bolder">Description</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"
-                            placeholder="Campaign Description"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label fw-bolder">Target Amount</label>
-                        <div class="input-group mb-3">
-                            <input type="number" class="form-control" placeholder="1.12"
-                                aria-label="Recipient's username" aria-describedby="basic-addon2">
-                            <span class="input-group-text" id="basic-addon2">ETH</span>
-                        </div>
-                    </div>
 
-                    <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label fw-bolder">Target Date</label>
-                        <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="10.5">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label fw-bolder">Campaign Image URL</label>
-                        <input type="text" class="form-control" id="exampleFormControlInput1"
-                            placeholder="https://something.com/image.png">
-                    </div>
-                    <div class="d-grid gap-2 mb-3">
-                        <button class="btn btn-success" type="button" data-bs-placement="bottom"
-                            data-bs-toggle="tooltip" data-bs-title="Submit Campaign Details">Submit</button>
-                    </div>
+                    <form [formGroup]="campaignForm" (ngSubmit)="onSubmit()">
+                        <div class="my-3">
+                            <label for="exampleFormControlInput1" class="form-label fw-bolder">Title</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput1"
+                                formControlName="title" placeholder="Campaign Title"
+                                [ngClass]="{'is-invalid': isCampaignFormSubmitted && f['title'].errors}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label fw-bolder">Description</label>
+                            <textarea class="form-control" formControlName="description"
+                                id="exampleFormControlTextarea1" rows="2" placeholder="Campaign Description"
+                                [ngClass]="{'is-invalid': isCampaignFormSubmitted && f['description'].errors}"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label fw-bolder">Target Amount</label>
+                            <div class="input-group mb-3">
+                                <input type="number" class="form-control" placeholder="1.12" formControlName="target"
+                                    aria-label="Recipient's username" aria-describedby="basic-addon2"
+                                    [ngClass]="{'is-invalid': isCampaignFormSubmitted && f['target'].errors}">
+                                <span class="input-group-text" id="basic-addon2">ETH</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label fw-bolder">Target Date</label>
+                            <input type="date" class="form-control" formControlName="deadline"
+                                id="exampleFormControlInput1" placeholder="10.5"
+                                [ngClass]="{'is-invalid': isCampaignFormSubmitted && f['deadline'].errors}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label fw-bolder">Campaign Image
+                                URL</label>
+                            <input type="text" class="form-control" formControlName="image"
+                                id="exampleFormControlInput1" placeholder="https://something.com/image.png"
+                                [ngClass]="{'is-invalid': isCampaignFormSubmitted && f['image'].errors}">
+                        </div>
+                        <div class="d-grid gap-2 mb-3">
+                            <button class="btn btn-success" type="submit" data-bs-placement="bottom"
+                                data-bs-toggle="tooltip" data-bs-title="Submit Campaign Details">Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

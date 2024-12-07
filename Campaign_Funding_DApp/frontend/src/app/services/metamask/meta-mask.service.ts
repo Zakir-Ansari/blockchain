@@ -1,12 +1,14 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import detectEthereumProvider from '@metamask/detect-provider';
 import { ethers } from 'ethers';
 import { BehaviorSubject } from 'rxjs';
+import { ToastService } from '../shared/toast/toast.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MetaMaskService {
+  toastService = inject(ToastService);
   private provider: any = null;
   private signer: ethers.Signer | null = null;
 
@@ -34,7 +36,13 @@ export class MetaMaskService {
 
   async connectWallet(): Promise<void> {
     if (!this.provider) {
-      alert('MetaMask is not installed. Please install it and try again.');
+      this.toastService.showToast(
+        'Error!',
+        'Metamask is not installed. Please install it first.',
+        'error',
+        5000,
+        'top-0 start-50 translate-middle-x'
+      );
       return;
     }
     try {
@@ -44,8 +52,15 @@ export class MetaMaskService {
       if (accounts.length > 0) {
         await this.setAccount(accounts[0]);
       }
-    } catch (error) {
-      console.error('Failed to connect wallet:', error);
+    } catch (error: any) {
+      console.error(error);
+      this.toastService.showToast(
+        'Error!',
+        `Failed to connect wallet. ${error?.message}`,
+        'error',
+        5000,
+        'top-0 start-50 translate-middle-x'
+      );
     }
   }
 

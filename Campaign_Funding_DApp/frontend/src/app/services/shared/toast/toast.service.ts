@@ -51,7 +51,7 @@ export class ToastService {
    *
    * @example
    * // Show a toast at the top-right with action
-   * showToast('Failure', 'Error occurred!', 'error' 3000, 'top-0 end-0', {
+   * showToast('Failure', 'Error occurred!', 'error', 3000, 'top-0 end-0', {
    *   bxIconName: 'bx-link',
    *   callback: () => console.log('Icon clicked'),
    * });

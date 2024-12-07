@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { createThirdwebClient, defineChain, getContract } from 'thirdweb';
 import { createWallet } from 'thirdweb/wallets';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThirdwebService {
   private client = createThirdwebClient({
-    clientId: 'YOUR_CLIENT_ID',
+    clientId: environment.thirdwebClientId,
   });
 
   private wallet = createWallet('io.metamask');
@@ -15,7 +16,7 @@ export class ThirdwebService {
   private contract = getContract({
     client: this.client,
     chain: defineChain(17000),
-    address: 'CONTRACT_ADDRESS',
+    address: environment.contractAddress,
   });
 
   connectWallet() {

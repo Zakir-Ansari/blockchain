@@ -1,13 +1,20 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ThirdwebService } from '../thirdweb/thirdweb.service';
 import { prepareContractCall, readContract, sendTransaction } from 'thirdweb';
 import { Campaign } from '../../models/campaign.model';
+import { MetaMaskService } from '../metamask/meta-mask.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CampaignService {
-  constructor(private thirdweb: ThirdwebService) {}
+  metaMaskService = inject(MetaMaskService);
+  walletAddress: string | null = null;
+  constructor(private thirdweb: ThirdwebService) {
+    this.metaMaskService.account$.subscribe((account) => {
+      this.walletAddress = account;
+    });
+  }
 
   async getCampaigns() {
     const contract = this.thirdweb.getContract();
@@ -38,20 +45,22 @@ export class CampaignService {
   }
 
   async createCampaign(
-    owner: string,
     title: string,
     description: string,
     target: number,
     deadline: number,
     image: string
   ) {
+    if (!this.walletAddress) {
+      return Promise.reject({ validationError: 'Wallet is not connected!' });
+    }
     const contract = this.thirdweb.getContract();
     const transaction = prepareContractCall({
       contract,
       method:
         'function createCampaign(address _owner, string _title, string _description, uint256 _target, uint256 _deadline, string _image) returns (uint256)',
       params: [
-        owner,
+        this.walletAddress,
         title,
         description,
         BigInt(target),
@@ -76,6 +85,20 @@ export class CampaignService {
       value: BigInt(amount),
     });
 
+    const account = await this.thirdweb.connectWallet();
+    return sendTransaction({
+      transaction,
+      account,
+    });
+  }
+
+  async deleteCampaign(campaignId: number) {
+    const contract = this.thirdweb.getContract();
+    const transaction = await prepareContractCall({
+      contract,
+      method: 'function deleteCampaign(uint256 _id)',
+      params: [BigInt(campaignId)],
+    });
     const account = await this.thirdweb.connectWallet();
     return sendTransaction({
       transaction,

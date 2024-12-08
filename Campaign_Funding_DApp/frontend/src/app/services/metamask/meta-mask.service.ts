@@ -36,14 +36,7 @@ export class MetaMaskService {
 
   async connectWallet(): Promise<void> {
     if (!this.provider) {
-      this.toastService.showToast(
-        'Error!',
-        'Metamask is not installed. Please install it first.',
-        'error',
-        5000,
-        'top-0 start-50 translate-middle-x'
-      );
-      return;
+      throw new Error('Metamask is not installed. Please install it first.');
     }
     try {
       const accounts = await this.provider.request({
@@ -53,14 +46,7 @@ export class MetaMaskService {
         await this.setAccount(accounts[0]);
       }
     } catch (error: any) {
-      console.error(error);
-      this.toastService.showToast(
-        'Error!',
-        `Failed to connect wallet. ${error?.message}`,
-        'error',
-        5000,
-        'top-0 start-50 translate-middle-x'
-      );
+      throw new Error(`Failed to connect wallet. ${error?.message}`);
     }
   }
 

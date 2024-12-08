@@ -6,11 +6,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { States } from '../../constants/common.constant';
+import { Campaign } from '../../models/campaign.model';
 import { CampaignService } from '../../services/campaign/campaign.service';
 import { ToastService } from '../../services/shared/toast/toast.service';
-import { Campaign } from '../../models/campaign.model';
-import { States, UNKNOWN_ERROR_MESSAGE } from '../../constants/common.constant';
-import { min } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -51,14 +50,7 @@ export class HomeComponent implements OnInit {
         this.campaignList = response;
         this.campaignsDataState = States.LOADED;
       })
-      .catch((error) => {
-        this.toastService.showToast(
-          'Error!',
-          'Unable to fetch campaigns.',
-          'error',
-          5000,
-          'top-0 start-50 translate-middle-x'
-        );
+      .catch(() => {
         this.campaignsDataState = States.FAILED;
       });
   }
@@ -95,15 +87,6 @@ export class HomeComponent implements OnInit {
           }
         );
         this.resetCampaignForm();
-      })
-      .catch((error) => {
-        this.toastService.showToast(
-          'Failure',
-          error?.validationError || error.message || UNKNOWN_ERROR_MESSAGE,
-          'error',
-          5000,
-          'top-0 start-50 translate-middle-x'
-        );
       });
   }
 

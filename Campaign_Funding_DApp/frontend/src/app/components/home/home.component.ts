@@ -6,16 +6,18 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { States } from '../../constants/common.constant';
 import { Campaign } from '../../models/campaign.model';
 import { CampaignService } from '../../services/campaign/campaign.service';
 import { ToastService } from '../../services/shared/toast/toast.service';
 import { UtilService } from '../../services/shared/util/util.service';
+import { TruncatePipe } from '../../pipes/truncate.pipe';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, TruncatePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   encapsulation: ViewEncapsulation.None,
@@ -25,6 +27,7 @@ export class HomeComponent implements OnInit {
   toastService = inject(ToastService);
   campaignService = inject(CampaignService);
   util = inject(UtilService);
+  clipboard = inject(Clipboard);
 
   // variables
   campaignForm!: FormGroup;
@@ -34,7 +37,9 @@ export class HomeComponent implements OnInit {
   isCampaignFormSubmitted = false;
   STATES = States;
   campaignsDataState!: States;
+  campaignCreationState!: States;
   currentDate = new Date().toISOString().slice(0, 10);
+  copiedAddressAtIndex = -1;
 
   ngOnInit(): void {
     this.campaignsDataState = States.LOADING;
@@ -71,15 +76,17 @@ export class HomeComponent implements OnInit {
     if (!this.campaignForm.valid) {
       return;
     }
+    this.campaignCreationState = States.LOADING;
     this.campaignService
       .createCampaign(
         this.campaignForm.value.title,
         this.campaignForm.value.description,
         this.campaignForm.value.target,
-        1738234141971,
+        new Date(this.campaignForm.value.deadline).getTime(),
         this.campaignForm.value.image
       )
       .then((response) => {
+        this.campaignCreationState = States.LOADED;
         this.toastService.showToast(
           'Success',
           'Campaign created!',
@@ -92,11 +99,21 @@ export class HomeComponent implements OnInit {
           }
         );
         this.resetCampaignForm();
+      })
+      .catch((error) => {
+        this.campaignCreationState = States.FAILED;
+        throw new Error(error?.message || 'Unknown Error');
       });
   }
 
   resetCampaignForm() {
     this.campaignForm.reset();
     this.isCampaignFormSubmitted = false;
+  }
+
+  copyAddress(value: string, index: number) {
+    this.clipboard.copy(value);
+    this.copiedAddressAtIndex = index;
+    setTimeout(() => (this.copiedAddressAtIndex = -1), 2000);
   }
 }

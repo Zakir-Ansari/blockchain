@@ -46,7 +46,12 @@
                         </div>
                         <div class="d-grid gap-2 mb-3">
                             <button class="btn btn-success" type="submit" data-bs-placement="bottom"
-                                data-bs-toggle="tooltip" data-bs-title="Submit Campaign Details">Submit</button>
+                                data-bs-toggle="tooltip" data-bs-title="Submit Campaign Details"
+                                [disabled]="campaignCreationState === STATES.LOADING">
+                                @if(campaignCreationState === STATES.LOADING) {
+                                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                }
+                                Submit</button>
                         </div>
                     </form>
                 </div>
@@ -94,9 +99,20 @@
                             <p>Days Left</p>
                         </div>
                     </div>
-                    <div class="owner">Owner</div>
+                    <div class="d-flex justify-content-between align-item-center">
+                        <div class="owner d-flex align-item-center mt-2">
+                            <i class='bx bxs-user-circle me-1 fs-5'></i>
+                            <span class="me-2 fw-bold">Owner:</span>
+                            <span class="fs-6 text-secondary">{{campaign.owner | truncate:5:4}}</span>
+                            <i class='ms-1 bx cursor-p fs-5'
+                                [ngClass]="copiedAddressAtIndex !== $index ? 'bx-copy': 'bx-check text-success'"
+                                [title]="copiedAddressAtIndex !== $index ? 'copy': 'copied'"
+                                (click)="copyAddress(campaign.owner, $index)"></i>
+                        </div>
+                        <button type="button" class="btn btn-outline-success btn-sm" title="View Details"><i
+                                class='bx bx-link-external'></i></button>
+                    </div>
                 </div>
-
             </div>
         </div>
         }

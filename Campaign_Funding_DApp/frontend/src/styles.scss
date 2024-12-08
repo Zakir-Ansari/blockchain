@@ -93,8 +93,14 @@ body {
   font-size: 80px;
 }
 
+.campaign-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 // for all mobile screens
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 992px) {
   .campaign-card:hover {
     scale: 1;
     transition: 0.2s;

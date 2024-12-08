@@ -81,8 +81,22 @@
             <img [src]="campaign.image" class="card-img-top img-fluid" alt="..." style="width: 100%; height: 100%;">
             <div class="card-body">
                 <h5 class="card-title">{{campaign.title}}</h5>
-                <p class="card-text">{{campaign.description}}</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="card-text">
+                    <span class="description">{{campaign.description}}</span>
+                    <div class="d-flex justify-content-between">
+                        <div class="fund">
+                            <span class="fs-3 fw-bold text-secondary me-1">4.56</span>ETH
+                            <p>Raised of: <span class="fw-bold fs-6 text-secondary me-1">{{campaign.target}}</span> ETH
+                            </p>
+                        </div>
+                        <div class="deadline">
+                            <span class="fs-3 fw-bold text-secondary">{{campaign.deadline}}</span>
+                            <p>Days Left</p>
+                        </div>
+                    </div>
+                    <div class="owner">Owner</div>
+                </div>
+
             </div>
         </div>
         }

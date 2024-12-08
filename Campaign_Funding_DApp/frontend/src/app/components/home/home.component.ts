@@ -10,6 +10,7 @@ import { States } from '../../constants/common.constant';
 import { Campaign } from '../../models/campaign.model';
 import { CampaignService } from '../../services/campaign/campaign.service';
 import { ToastService } from '../../services/shared/toast/toast.service';
+import { UtilService } from '../../services/shared/util/util.service';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,7 @@ export class HomeComponent implements OnInit {
   // services
   toastService = inject(ToastService);
   campaignService = inject(CampaignService);
+  util = inject(UtilService);
 
   // variables
   campaignForm!: FormGroup;
@@ -47,6 +49,10 @@ export class HomeComponent implements OnInit {
     this.campaignService
       .getCampaigns()
       .then((response) => {
+        response.map((res) => {
+          res.deadline = this.util.calculateDaysLeft(res.deadline);
+          return res;
+        });
         this.campaignList = response;
         this.campaignsDataState = States.LOADED;
       })
@@ -62,7 +68,6 @@ export class HomeComponent implements OnInit {
 
   onSubmit() {
     this.isCampaignFormSubmitted = true;
-    console.log(this.campaignForm.value.deadline);
     if (!this.campaignForm.valid) {
       return;
     }

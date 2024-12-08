@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createThirdwebClient, defineChain, getContract } from 'thirdweb';
 import { createWallet } from 'thirdweb/wallets';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',

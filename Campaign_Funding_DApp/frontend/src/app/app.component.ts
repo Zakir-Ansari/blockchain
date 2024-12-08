@@ -9,6 +9,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { CampaignService } from './services/campaign/campaign.service';
 import { MetaMaskService } from './services/metamask/meta-mask.service';
 import { TruncatePipe } from './pipes/truncate.pipe';
+import { environment } from '../environments/environment.development';
 
 declare const bootstrap: any; // Required to use Bootstrap JS
 
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
   walletBalance: string | null = null;
 
   ngOnInit(): void {
+    console.log('ENV:', environment.env);
     this.metaMaskService.account$.subscribe((account) => {
       this.walletAddress = account;
     });

@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
   // variables
   campaignForm!: FormGroup;
   campaignList: Campaign[] = [];
+  selectedCampaign: Campaign | undefined = undefined;
 
   // helper
   isCampaignFormSubmitted = false;
@@ -112,5 +113,9 @@ export class HomeComponent implements OnInit {
   resetCampaignForm() {
     this.campaignForm.reset();
     this.isCampaignFormSubmitted = false;
+  }
+
+  displayCampaignDetails(campaign: Campaign) {
+    this.selectedCampaign = campaign;
   }
 }

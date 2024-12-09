@@ -1,3 +1,11 @@
 .working-lady-icon {
   width: 70%;
 }
+
+.donate-button {
+  img {
+    --size: 15px;
+    height: var(--size);
+    width: var(--size);
+  }
+}

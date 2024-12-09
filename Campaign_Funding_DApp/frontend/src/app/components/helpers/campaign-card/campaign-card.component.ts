@@ -1,6 +1,13 @@
 import { Clipboard } from '@angular/cdk/clipboard';
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Campaign } from '../../../models/campaign.model';
 import { TruncatePipe } from '../../../pipes/truncate.pipe';
 
@@ -15,6 +22,8 @@ import { TruncatePipe } from '../../../pipes/truncate.pipe';
 export class CampaignCardComponent {
   @Input() campaign!: Campaign;
   @Input() campaignIndex!: number;
+  @Output() onCampaignSelected: EventEmitter<Campaign> =
+    new EventEmitter<Campaign>();
 
   clipboard = inject(Clipboard);
 
@@ -24,5 +33,9 @@ export class CampaignCardComponent {
     this.clipboard.copy(value);
     this.copiedAddressAtIndex = index;
     setTimeout(() => (this.copiedAddressAtIndex = -1), 2000);
+  }
+
+  selectCampaign() {
+    this.onCampaignSelected.emit(this.campaign);
   }
 }

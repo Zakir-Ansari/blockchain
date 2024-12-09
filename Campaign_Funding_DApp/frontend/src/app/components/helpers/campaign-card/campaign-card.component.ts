@@ -10,11 +10,12 @@ import {
 } from '@angular/core';
 import { Campaign } from '../../../models/campaign.model';
 import { TruncatePipe } from '../../../pipes/truncate.pipe';
+import { ToEthPipe } from '../../../pipes/to-eth.pipe';
 
 @Component({
   selector: 'app-campaign-card',
   standalone: true,
-  imports: [CommonModule, TruncatePipe],
+  imports: [CommonModule, TruncatePipe, ToEthPipe],
   templateUrl: './campaign-card.component.html',
   styleUrl: './campaign-card.component.scss',
   encapsulation: ViewEncapsulation.None,

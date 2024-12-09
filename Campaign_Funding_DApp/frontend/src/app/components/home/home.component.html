@@ -93,9 +93,9 @@
 } @else {
 <div class="container-fluid text-dark">
     <button type="button" class="btn btn-primary" (click)="selectedCampaign = undefined">
-        <i class='bx bx-chevron-left'></i>Back
+        <i class='bx bx-chevron-left fs-6'></i><span>Back</span>
     </button>
-    <app-campaign-details></app-campaign-details>
+    <app-campaign-details [campaign]="selectedCampaign"></app-campaign-details>
 </div>
 
 

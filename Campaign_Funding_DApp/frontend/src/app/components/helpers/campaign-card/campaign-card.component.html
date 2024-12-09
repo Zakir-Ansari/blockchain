@@ -2,7 +2,7 @@
     style="width: 100%; height: 100%;">
 <div class="z-3 position-absolute text-light w-100">
     <div class="float-end p-3">
-        <button type="button" class="btn btn-secondary btn-sm view-campaign" (click)="selectCampaign()">
+        <button type="button" class="btn btn-primary btn-sm view-campaign" (click)="selectCampaign()">
             <i class='bx bx-link-external' title="View Campaign Details"></i>
         </button>
     </div>
@@ -15,13 +15,13 @@
         <span class="description">{{campaign.description}}</span>
         <div class="d-flex justify-content-between">
             <div class="fund">
-                <span class="fs-3 fw-bold text-secondary me-1">4.56</span>ETH
-                <p>Raised of: <span class="fw-bold fs-6 text-secondary me-1">{{campaign.target}}</span> ETH
+                <span class="fs-3 fw-bold text-secondary me-1">{{campaign.totalDonation | toEth:3 }}</span>ETH
+                <p>Raised of: <span class="fw-bold fs-6 text-secondary me-1 p-0">{{campaign.target}}</span>ETH
                 </p>
             </div>
             <div class="deadline">
                 <span class="fs-3 fw-bold text-secondary">{{campaign.deadline}}</span>
-                <p>Days Left</p>
+                <p class="mt-1">Days Left</p>
             </div>
         </div>
         <div class="owner d-flex align-item-center mt-2">

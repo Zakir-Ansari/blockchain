@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { ThirdwebService } from '../thirdweb/thirdweb.service';
 import { prepareContractCall, readContract, sendTransaction } from 'thirdweb';
-import { Campaign } from '../../models/campaign.model';
+import { Campaign, DonatorDonations } from '../../models/campaign.model';
 import { MetaMaskService } from '../metamask/meta-mask.service';
 
 @Injectable({
@@ -38,9 +38,17 @@ export class CampaignService {
               deadline: Number(campaign.deadline) * 1000,
               amountCollected: Number(campaign.amountCollected),
               image: campaign.image,
-              donators: campaign.donators,
-              donations: campaign.donations.map(Number),
+              totalDonation: campaign.donations
+                .map(Number)
+                .reduce((sum, curr) => sum + curr, 0),
               isDeleted: campaign.isDeleted,
+              donatorDonations: campaign.donators.map((donator, index) => {
+                const result: DonatorDonations = {
+                  donator: donator,
+                  donation: campaign.donations.map(Number)[index],
+                };
+                return result;
+              }),
             } as Campaign)
         );
       });

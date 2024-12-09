@@ -7,7 +7,12 @@ export interface Campaign {
   deadline: number; // Converted BigInt to string
   amountCollected: number; // Converted BigInt to string
   image: string;
-  donators: string[];
-  donations: number[];
+  totalDonation: number;
   isDeleted: boolean;
+  donatorDonations?: DonatorDonations[];
+}
+
+export interface DonatorDonations {
+  donator: string;
+  donation: number;
 }

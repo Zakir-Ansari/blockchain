@@ -99,6 +99,18 @@ body {
   text-overflow: ellipsis;
 }
 
+.view-campaign {
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.campaign-card:hover {
+  .view-campaign {
+    opacity: 1;
+    transition: 0.5s;
+  }
+}
+
 // for all mobile screens
 @media screen and (min-width: 992px) {
   .campaign-card:hover {

@@ -6,18 +6,23 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Clipboard } from '@angular/cdk/clipboard';
 import { States } from '../../constants/common.constant';
 import { Campaign } from '../../models/campaign.model';
 import { CampaignService } from '../../services/campaign/campaign.service';
 import { ToastService } from '../../services/shared/toast/toast.service';
 import { UtilService } from '../../services/shared/util/util.service';
-import { TruncatePipe } from '../../pipes/truncate.pipe';
+import { CampaignCardComponent } from '../helpers/campaign-card/campaign-card.component';
+import { CampaignDetailsComponent } from '../helpers/campaign-details/campaign-details.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TruncatePipe],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    CampaignDetailsComponent,
+    CampaignCardComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   encapsulation: ViewEncapsulation.None,
@@ -27,7 +32,6 @@ export class HomeComponent implements OnInit {
   toastService = inject(ToastService);
   campaignService = inject(CampaignService);
   util = inject(UtilService);
-  clipboard = inject(Clipboard);
 
   // variables
   campaignForm!: FormGroup;
@@ -39,7 +43,6 @@ export class HomeComponent implements OnInit {
   campaignsDataState!: States;
   campaignCreationState!: States;
   currentDate = new Date().toISOString().slice(0, 10);
-  copiedAddressAtIndex = -1;
 
   ngOnInit(): void {
     this.campaignsDataState = States.LOADING;
@@ -109,11 +112,5 @@ export class HomeComponent implements OnInit {
   resetCampaignForm() {
     this.campaignForm.reset();
     this.isCampaignFormSubmitted = false;
-  }
-
-  copyAddress(value: string, index: number) {
-    this.clipboard.copy(value);
-    this.copiedAddressAtIndex = index;
-    setTimeout(() => (this.copiedAddressAtIndex = -1), 2000);
   }
 }

@@ -1,0 +1,37 @@
+<img [src]="campaign.image" class="z-2 position-relative card-img-top img-fluid" alt="..."
+    style="width: 100%; height: 100%;">
+<div class="z-3 position-absolute text-light w-100">
+    <div class="float-end p-3">
+        <button type="button" class="btn btn-secondary btn-sm view-campaign">
+            <i class='bx bx-link-external' title="View Campaign Details"></i>
+        </button>
+    </div>
+</div>
+<div class="card-body">
+    <div class="card-title d-flex align-item-center">
+        <span class=" fs-5 fw-bold campaign-title">{{campaign.title}}</span>
+    </div>
+    <div class="card-text">
+        <span class="description">{{campaign.description}}</span>
+        <div class="d-flex justify-content-between">
+            <div class="fund">
+                <span class="fs-3 fw-bold text-secondary me-1">4.56</span>ETH
+                <p>Raised of: <span class="fw-bold fs-6 text-secondary me-1">{{campaign.target}}</span> ETH
+                </p>
+            </div>
+            <div class="deadline">
+                <span class="fs-3 fw-bold text-secondary">{{campaign.deadline}}</span>
+                <p>Days Left</p>
+            </div>
+        </div>
+        <div class="owner d-flex align-item-center mt-2">
+            <i class='bx bxs-user-circle me-1 fs-5'></i>
+            <span class="me-2 fw-bold">Owner:</span>
+            <span class="fs-6 text-secondary">{{campaign.owner | truncate:5:4}}</span>
+            <i class='ms-1 bx cursor-p fs-5'
+                [ngClass]="copiedAddressAtIndex !== campaignIndex ? 'bx-copy': 'bx-check text-success'"
+                [title]="copiedAddressAtIndex !== campaignIndex ? 'copy': 'copied'"
+                (click)="copyAddress(campaign.owner, campaignIndex)"></i>
+        </div>
+    </div>
+</div>

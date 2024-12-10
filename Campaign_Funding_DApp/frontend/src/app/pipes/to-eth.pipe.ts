@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class ToEthPipe implements PipeTransform {
-  transform(value: number | string, maxDecimalDigits: number = 6): string {
+  transform(value: number | string, maxDecimalDigits: number = 3): string {
     if (value == null || isNaN(Number(value))) {
       return 'Invalid value';
     }

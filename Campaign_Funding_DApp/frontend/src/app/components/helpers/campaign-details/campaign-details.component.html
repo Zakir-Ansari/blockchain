@@ -1,1 +1,62 @@
-<p>campaign-details works!</p>
+<div class="row my-4">
+    <!-- Campaign Image -->
+    <div class="col-lg-8 col-md-12 mb-2">
+        <div class="card p-0 border-0 shadow">
+            <img [src]="campaign.image" class="card-img-top img-fluid rounded" alt="...">
+        </div>
+        <div class="progress my-1 shadow" style="height: 6px"
+            [title]="'Raised ' + percentOfDonation + ' of target amount.'">
+            <div class="progress-bar bg-success" [style.width]="percentOfDonation">
+            </div>
+        </div>
+    </div>
+    <!-- Campaign Content-->
+    <div class="col-lg-4 col-md-12 d-flex flex-column justify-content-between mb-2">
+        <!-- Title and Description -->
+        <div class="row">
+            <div class="col-12">
+                <span class="fs-2 fw-bold text-dark">{{ campaign.title }}</span>
+                <p class="text-secondary-emphasis px-1">{{ campaign.description }}</p>
+            </div>
+        </div>
+        <!-- Details-->
+        <div class="row">
+            <div class="d-flex justify-content-around">
+                <div class="col p-1">
+                    <div class="card bg-dark bg-opacity-50 text-light shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">Donators</h5>
+                            <span class="card-text fs-1 fw-bold me-1">12</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col p-1">
+                    <div class="card bg-dark bg-opacity-50 text-light  shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">Days Left</h5>
+                            <span class="card-text fs-1 fw-bold me-1">{{ campaign.deadline }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="col p-1">
+                    <div class="card bg-dark bg-opacity-50 text-light shadow">
+                        <div class="d-flex">
+                            <div class="card-body">
+                                <h5 class="card-title">Donation</h5>
+                                <span class="card-text fs-1 fw-bold me-1">{{ campaign.totalDonation | toEth
+                                    }}</span><span>ETH</span>
+                            </div>
+                            <div class="card-body text-start">
+                                <h5 class="card-title">Target</h5>
+                                <span class="card-text fs-1 fw-bold me-1">{{ campaign.target }}</span><span>ETH</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -91,12 +91,8 @@
     }
 </div>
 } @else {
-<div class="container-fluid text-dark">
-    <button type="button" class="btn btn-primary" (click)="selectedCampaign = undefined">
-        <i class='bx bx-chevron-left fs-6'></i><span>Back</span>
-    </button>
-    <app-campaign-details [campaign]="selectedCampaign"></app-campaign-details>
-</div>
-
-
+<button type="button" class="btn btn-success" (click)="selectedCampaign = undefined">
+    <i class='bx bx-chevron-left fs-6'></i><span>Back</span>
+</button>
+<app-campaign-details class="container" [campaign]="selectedCampaign"></app-campaign-details>
 }

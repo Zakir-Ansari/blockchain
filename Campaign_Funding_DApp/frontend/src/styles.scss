@@ -2,10 +2,31 @@
 //@import url(//fonts.googleapis.com/css?family=Lato:300:400);
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
+html,
+body {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: "Open Sans", sans-serif;
   font-optical-sizing: auto;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure it stretches to the full height */
+}
+
+/* Footer sits at the bottom */
+.footer {
+  margin-top: auto; /* Push the footer to the bottom */
+  background: linear-gradient(
+    60deg,
+    rgba(84, 58, 183, 1) 0%,
+    rgba(0, 172, 193, 1) 100%
+  );
 }
 
 .wave-container {

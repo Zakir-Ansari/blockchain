@@ -94,5 +94,6 @@
 <button type="button" class="btn btn-success" (click)="selectedCampaign = undefined">
     <i class='bx bx-chevron-left fs-6'></i><span>Back</span>
 </button>
-<app-campaign-details class="container" [campaign]="selectedCampaign"></app-campaign-details>
+<app-campaign-details class="container" [campaign]="selectedCampaign"
+    (refreshParent)="ngOnInit()"></app-campaign-details>
 }

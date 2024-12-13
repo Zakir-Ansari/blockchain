@@ -12,7 +12,7 @@ export class CampaignService {
   walletAddress: string | null = null;
 
   constructor(private thirdweb: ThirdwebService) {
-    this.metaMaskService.account$.subscribe((account) => {
+    this.metaMaskService.account$.subscribe(account => {
       this.walletAddress = account;
     });
   }
@@ -25,22 +25,20 @@ export class CampaignService {
         method:
           'function getCampaigns() view returns ((uint256 id, address owner, string title, string description, uint256 target, uint256 deadline, uint256 amountCollected, string image, address[] donators, uint256[] donations, bool isDeleted)[])',
         params: [],
-      }).then((data) => {
+      }).then(data => {
         return data.map(
-          (campaign) =>
+          campaign =>
             ({
               id: Number(campaign.id),
               owner: campaign.owner,
               title: campaign.title,
               description: campaign.description,
               // converting target date from epoch to local
-              target: Number(campaign.target),
+              target: Number(campaign.target) * Math.pow(10, 18),
               deadline: Number(campaign.deadline) * 1000,
               amountCollected: Number(campaign.amountCollected),
               image: campaign.image,
-              totalDonation: campaign.donations
-                .map(Number)
-                .reduce((sum, curr) => sum + curr, 0),
+              totalDonation: campaign.donations.map(Number).reduce((sum, curr) => sum + curr, 0),
               isDeleted: campaign.isDeleted,
               donatorDonations: campaign.donators.map((donator, index) => {
                 const result: DonatorDonations = {
@@ -57,17 +55,9 @@ export class CampaignService {
     }
   }
 
-  async createCampaign(
-    title: string,
-    description: string,
-    target: number,
-    deadline: number,
-    image: string
-  ) {
+  async createCampaign(title: string, description: string, target: number, deadline: number, image: string) {
     if (!this.walletAddress) {
-      throw new Error(
-        'Wallet is not connected! Please connect Metamask wallet first.'
-      );
+      throw new Error('Wallet is not connected! Please connect Metamask wallet first.');
     }
     try {
       const contract = this.thirdweb.getContract();
@@ -95,14 +85,17 @@ export class CampaignService {
     }
   }
 
-  async donateToCampaign(campaignId: number, amount: number) {
+  async donateToCampaign(campaignId: number, amount: bigint) {
+    if (!this.walletAddress) {
+      throw new Error('Wallet is not connected! Please connect Metamask wallet first.');
+    }
     try {
       const contract = this.thirdweb.getContract();
       const transaction = prepareContractCall({
         contract,
         method: 'function donateToCampaign(uint256 _id) payable',
         params: [BigInt(campaignId)],
-        value: BigInt(amount),
+        value: amount,
       });
 
       const account = await this.thirdweb.connectWallet();
@@ -116,6 +109,9 @@ export class CampaignService {
   }
 
   async deleteCampaign(campaignId: number) {
+    if (!this.walletAddress) {
+      throw new Error('Wallet is not connected! Please connect Metamask wallet first.');
+    }
     try {
       const contract = this.thirdweb.getContract();
       const transaction = await prepareContractCall({

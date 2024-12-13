@@ -1,11 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { States } from '../../constants/common.constant';
 import { Campaign } from '../../models/campaign.model';
 import { CampaignService } from '../../services/campaign/campaign.service';
@@ -13,16 +8,12 @@ import { ToastService } from '../../services/shared/toast/toast.service';
 import { UtilService } from '../../services/shared/util/util.service';
 import { CampaignCardComponent } from '../helpers/campaign-card/campaign-card.component';
 import { CampaignDetailsComponent } from '../helpers/campaign-details/campaign-details.component';
+import { filter, from, map } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    CampaignDetailsComponent,
-    CampaignCardComponent,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, CampaignDetailsComponent, CampaignCardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   encapsulation: ViewEncapsulation.None,
@@ -36,7 +27,7 @@ export class HomeComponent implements OnInit {
   // variables
   campaignForm!: FormGroup;
   campaignList: Campaign[] = [];
-  selectedCampaign: Campaign | undefined = undefined;
+  selectedCampaign: Campaign | undefined;
 
   // helper
   isCampaignFormSubmitted = false;
@@ -46,6 +37,7 @@ export class HomeComponent implements OnInit {
   currentDate = new Date().toISOString().slice(0, 10);
 
   ngOnInit(): void {
+    this.selectedCampaign = undefined;
     this.campaignsDataState = States.LOADING;
     this.campaignForm = new FormGroup({
       title: new FormControl('', Validators.required),
@@ -55,18 +47,27 @@ export class HomeComponent implements OnInit {
       image: new FormControl('', Validators.required),
     });
 
-    this.campaignService
-      .getCampaigns()
-      .then((response) => {
-        response.map((res) => {
-          res.deadline = this.util.calculateDaysLeft(res.deadline);
-          return res;
-        });
-        this.campaignList = response;
-        this.campaignsDataState = States.LOADED;
-      })
-      .catch(() => {
-        this.campaignsDataState = States.FAILED;
+    from(this.campaignService.getCampaigns())
+      .pipe(
+        // filter campaigns, that are not deleted and whose target donation is not completed
+        map(data => data.filter(campaign => campaign.target > campaign.totalDonation && !campaign.isDeleted)),
+        // format the deadline
+        map(res =>
+          res.map(campaign => {
+            campaign.deadline = this.util.calculateDaysLeft(campaign.deadline);
+            return campaign;
+          })
+        )
+      )
+      .subscribe({
+        next: response => {
+          this.campaignList = response;
+          console.log(this.campaignList);
+          this.campaignsDataState = States.LOADED;
+        },
+        error: () => {
+          this.campaignsDataState = States.FAILED;
+        },
       });
   }
 
@@ -89,22 +90,19 @@ export class HomeComponent implements OnInit {
         new Date(this.campaignForm.value.deadline).getTime(),
         this.campaignForm.value.image
       )
-      .then((response) => {
+      .then(response => {
         this.campaignCreationState = States.LOADED;
+        const txLink = `<br><a href="https://holesky.beaconcha.in/tx/${response.transactionHash}" target="_blank">View Transaction</a>`;
         this.toastService.showToast(
           'Success',
-          'Campaign created!',
+          `Campaign created!${txLink}`,
           'check',
           5000,
-          'top-0 start-50 translate-middle-x',
-          {
-            bxIconName: 'bx-link',
-            callback: () => console.log('Icon clicked'),
-          }
+          'top-0 start-50 translate-middle-x'
         );
         this.resetCampaignForm();
       })
-      .catch((error) => {
+      .catch(error => {
         this.campaignCreationState = States.FAILED;
         throw new Error(error?.message || 'Unknown Error');
       });

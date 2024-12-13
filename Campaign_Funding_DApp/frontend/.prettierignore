@@ -1,0 +1,5 @@
+# add files here to ignore from prettier formatting
+/dist
+/coverage
+.angular
+/.nx/cache

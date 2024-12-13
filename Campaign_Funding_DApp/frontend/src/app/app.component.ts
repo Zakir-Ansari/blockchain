@@ -1,17 +1,9 @@
-import {
-  AfterViewInit,
-  Component,
-  inject,
-  OnInit,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { environment } from '../environments/environment';
+import { TruncatePipe } from './pipes/truncate.pipe';
 import { CampaignService } from './services/campaign/campaign.service';
 import { MetaMaskService } from './services/metamask/meta-mask.service';
-import { TruncatePipe } from './pipes/truncate.pipe';
-import { environment } from '../environments/environment';
-
-declare const bootstrap: any; // Required to use Bootstrap JS
 
 @Component({
   selector: 'app-root',
@@ -31,11 +23,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('ENV:', environment.env);
-    this.metaMaskService.account$.subscribe((account) => {
+    this.metaMaskService.account$.subscribe(account => {
       this.walletAddress = account;
     });
 
-    this.metaMaskService.balance$.subscribe((balance) => {
+    this.metaMaskService.balance$.subscribe(balance => {
       this.walletBalance = Number(balance).toFixed(3);
     });
   }

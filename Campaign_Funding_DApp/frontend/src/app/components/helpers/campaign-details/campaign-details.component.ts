@@ -15,7 +15,7 @@ import { States } from '../../../constants/common.constant';
   templateUrl: './campaign-details.component.html',
   styleUrl: './campaign-details.component.scss',
 })
-export class CampaignDetailsComponent implements OnInit, AfterViewInit {
+export class CampaignDetailsComponent implements OnInit {
   @Input() campaign!: Campaign;
   @Output() refreshParent = new EventEmitter<boolean>();
   toastService = inject(ToastService);
@@ -37,10 +37,6 @@ export class CampaignDetailsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    console.log('Selected Campaign:', this.campaign);
-  }
-
   get f() {
     return this.donationForm.controls;
   }
@@ -53,7 +49,6 @@ export class CampaignDetailsComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    console.log(this.donationForm.value);
     const amountInEth = BigInt(this.donationForm.value.amount * Math.pow(10, 18));
     this.campaignService
       .donateToCampaign(this.campaign.id, amountInEth)

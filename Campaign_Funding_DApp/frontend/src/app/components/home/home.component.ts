@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { from, map } from 'rxjs';
 import { States } from '../../constants/common.constant';
-import { Campaign } from '../../models/campaign.model';
+import { Campaign, DonatorDonations } from '../../models/campaign.model';
 import { CampaignService } from '../../services/campaign/campaign.service';
 import { ToastService } from '../../services/shared/toast/toast.service';
 import { UtilService } from '../../services/shared/util/util.service';
 import { CampaignCardComponent } from '../helpers/campaign-card/campaign-card.component';
 import { CampaignDetailsComponent } from '../helpers/campaign-details/campaign-details.component';
-import { filter, from, map } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -57,12 +57,23 @@ export class HomeComponent implements OnInit {
             campaign.deadline = this.util.calculateDaysLeft(campaign.deadline);
             return campaign;
           })
+        ),
+        // re-map the donatorDonations array with sum of donations for each donators
+        map(res =>
+          res.map(campaign => {
+            campaign.donatorDonations = campaign.donatorDonations?.reduce((acc, curr) => {
+              const currentDonator = acc.find(a => a.donator == curr.donator);
+              if (currentDonator) currentDonator.donation += curr.donation;
+              else acc.push(curr);
+              return acc;
+            }, [] as DonatorDonations[]);
+            return campaign;
+          })
         )
       )
       .subscribe({
         next: response => {
           this.campaignList = response;
-          console.log(this.campaignList);
           this.campaignsDataState = States.LOADED;
         },
         error: () => {
@@ -115,5 +126,6 @@ export class HomeComponent implements OnInit {
 
   displayCampaignDetails(campaign: Campaign) {
     this.selectedCampaign = campaign;
+    window.scroll({ top: 0 });
   }
 }

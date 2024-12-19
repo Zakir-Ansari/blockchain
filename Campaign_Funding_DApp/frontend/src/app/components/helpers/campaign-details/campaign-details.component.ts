@@ -23,6 +23,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 })
 export class CampaignDetailsComponent implements OnInit {
   @Input() campaign!: Campaign;
+  @Input() deletable = false;
   @Output() refreshParent = new EventEmitter<boolean>();
   toastService = inject(ToastService);
   campaignService = inject(CampaignService);

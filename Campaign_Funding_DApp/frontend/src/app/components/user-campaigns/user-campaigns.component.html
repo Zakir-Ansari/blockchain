@@ -1,0 +1,37 @@
+@if(!selectedCampaign) {
+<div class="container-fluid text-dark">
+    <div class="row pt-5 text-center text-light">
+        <h1 class="fw-bolder">MY CAMPAIGNS</h1>
+    </div>
+    @if(campaignsDataState === STATES.LOADING){
+    <div class="row text-center my-5 text-light">
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <span class="fs-5 fw-bolder my-1">Loading Campaigns</span>
+    </div>
+    } @else if(campaignsDataState === STATES.FAILED) {
+    <div class="row text-center my-5">
+        <i class='bx bxs-error-circle failed-logo'></i>
+        <span class="fs-5 fw-bolder text-secondary my-1">Failed to fetch Campaigns!</span>
+    </div>
+    }
+    @else {
+    <div class="row my-5">
+        @for (campaign of campaignList; track $index) {
+        <app-campaign-card class="card campaign-card col-xl-3 col-lg-4 col-md-6 col-sm-12 shadow-lg"
+            style="padding: 0px;" [campaign]="campaign" [campaignIndex]="$index"
+            (onCampaignSelected)="displayCampaignDetails($event)"></app-campaign-card>
+        }
+    </div>
+    }
+</div>
+} @else {
+<button type="button" class="btn btn-success" (click)="selectedCampaign = undefined">
+    <i class='bx bx-chevron-left fs-6'></i><span>Back</span>
+</button>
+<app-campaign-details class="container" [campaign]="selectedCampaign" [deletable]="true"
+    (refreshParent)="ngOnInit()"></app-campaign-details>
+}

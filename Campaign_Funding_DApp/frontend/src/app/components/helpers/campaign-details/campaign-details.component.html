@@ -2,7 +2,16 @@
     <!-- Campaign Image -->
     <div class="col-lg-8 col-md-12 mb-2">
         <div class="card p-0 border-0 shadow">
-            <img [src]="campaign.image" class="card-img-top img-fluid rounded" alt="...">
+            <img [src]="campaign.image" class="card-img-top z-2 position-relative img-fluid rounded" alt="...">
+            @if(deletable) {
+            <div class="z-3 position-absolute text-light w-100">
+                <div class="float-end p-3">
+                    <button type="button" class="btn btn-danger" title="Delete this Campaign">
+                        <i class='bx bxs-trash'></i>
+                    </button>
+                </div>
+            </div>
+            }
         </div>
         <div class="progress my-1 shadow" style="height: 6px"
             [title]="'Raised ' + percentOfDonation + ' of target amount.'">

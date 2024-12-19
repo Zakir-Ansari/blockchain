@@ -16,7 +16,6 @@ import { MetaMaskService } from './services/metamask/meta-mask.service';
 export class AppComponent implements OnInit {
   campaignService = inject(CampaignService);
   metaMaskService = inject(MetaMaskService);
-  title = 'campaign-funding-app';
 
   walletAddress: string | null = null;
   walletBalance: string | null = null;

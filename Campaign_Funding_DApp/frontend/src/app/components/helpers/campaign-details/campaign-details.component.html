@@ -21,12 +21,17 @@
         </div>
         <!-- Details-->
         <div class="row">
+            <div class="d-flex text-dark">
+                <i class='bx bxs-user-circle mx-1 fs-3'></i>
+                <span class="fs-5 me-1 fw-bold">Owner Address:</span><span class="fs-5">{{campaign.owner |
+                    truncate:10:4}}</span>
+            </div>
             <div class="d-flex justify-content-around">
                 <div class="col p-1">
                     <div class="card bg-dark bg-opacity-50 text-light shadow">
                         <div class="card-body">
                             <h5 class="card-title">Donators</h5>
-                            <span class="card-text fs-1 fw-bold me-1">12</span>
+                            <span class="card-text fs-1 fw-bold me-1">{{campaign.donatorDonations?.length??0}}</span>
                         </div>
                     </div>
                 </div>
@@ -93,7 +98,7 @@
         </div>
     </div>
     <div class="col-lg-8 order-lg-1">
-        <ag-grid-angular class="my-1 shadow rounded" style="height: 300px;" [rowData]="rowData" [columnDefs]="colDefs"
+        <ag-grid-angular class="my-1 shadow" style="height: 300px;" [rowData]="rowData" [columnDefs]="colDefs"
             [defaultColDef]="defaultColDef" [overlayNoRowsTemplate]="'No donation received to this campaign!'"
             (gridReady)="onGridReady($event)" />
     </div>

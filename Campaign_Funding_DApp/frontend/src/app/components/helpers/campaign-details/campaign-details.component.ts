@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AgGridAngular } from 'ag-grid-angular'; // Angular Data Grid Component
+import type { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community'; // Column Definition Type Interface
+import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 import { States } from '../../../constants/common.constant';
 import { Campaign, DonatorDonations } from '../../../models/campaign.model';
 import { ToEthPipe } from '../../../pipes/to-eth.pipe';
 import { CampaignService } from '../../../services/campaign/campaign.service';
 import { ToastService } from '../../../services/shared/toast/toast.service';
-import { AgGridAngular } from 'ag-grid-angular'; // Angular Data Grid Component
-import type { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community'; // Column Definition Type Interface
-import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
+import { TruncatePipe } from '../../../pipes/truncate.pipe';
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -16,7 +17,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 @Component({
   selector: 'app-campaign-details',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ToEthPipe, AgGridAngular],
+  imports: [CommonModule, ReactiveFormsModule, ToEthPipe, AgGridAngular, TruncatePipe],
   templateUrl: './campaign-details.component.html',
   styleUrl: './campaign-details.component.scss',
 })
@@ -59,10 +60,7 @@ export class CampaignDetailsComponent implements OnInit {
       amount: new FormControl('', [Validators.required, Validators.min(0)]),
     });
 
-    this.percentOfDonation = `${((this.campaign.totalDonation / Math.pow(10, 18) / this.campaign.target) * 100).toFixed(
-      0
-    )}%`;
-
+    this.percentOfDonation = `${((this.campaign.totalDonation / this.campaign.target) * 100).toFixed(0)}%`;
     this.rowData = this.campaign.donatorDonations ?? [];
   }
 

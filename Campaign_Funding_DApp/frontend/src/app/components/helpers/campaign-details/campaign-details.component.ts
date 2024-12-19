@@ -34,6 +34,7 @@ export class CampaignDetailsComponent implements OnInit {
   isDonationSubmitted = false;
   STATES = States;
   donationProcessState!: States;
+  deletionProcessState!: States;
 
   // Ag grid - Row Data: The data to be displayed.
   rowData: DonatorDonations[] = [];
@@ -57,6 +58,7 @@ export class CampaignDetailsComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    console.log('TESTING', this.campaign);
     this.donationForm = new FormGroup({
       amount: new FormControl('', [Validators.required, Validators.min(0)]),
     });
@@ -89,7 +91,7 @@ export class CampaignDetailsComponent implements OnInit {
         const txLink = `<br><a href="https://holesky.beaconcha.in/tx/${result.transactionHash}" target="_blank">View Transaction</a>`;
         this.toastService.showToast(
           'Donation Successful',
-          `Thank you for the donation!${txLink}`,
+          `Thank you for the donation! You will see the changes, once the transaction is completed. ${txLink}`,
           'check',
           5000,
           'top-0 start-50 translate-middle-x'
@@ -110,5 +112,27 @@ export class CampaignDetailsComponent implements OnInit {
 
   requestParentComponentToRefresh() {
     this.refreshParent.emit(true);
+  }
+
+  deleteCampaign() {
+    this.deletionProcessState = States.LOADING;
+    this.campaignService
+      .deleteCampaign(this.campaign.id)
+      .then(response => {
+        const txLink = `<br><a href="https://holesky.beaconcha.in/tx/${response.transactionHash}" target="_blank">View Transaction</a>`;
+        this.toastService.showToast(
+          'Campaign Deleted',
+          `You will see the changes, once the transaction is completed. ${txLink}`,
+          'check',
+          5000,
+          'top-0 start-50 translate-middle-x'
+        );
+        this.deletionProcessState = States.LOADED;
+        this.requestParentComponentToRefresh();
+      })
+      .catch(error => {
+        this.deletionProcessState = States.FAILED;
+        throw new Error(error?.message || 'Unknown Error');
+      });
   }
 }

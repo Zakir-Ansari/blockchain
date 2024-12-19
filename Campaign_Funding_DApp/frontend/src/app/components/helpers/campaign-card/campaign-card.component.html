@@ -9,8 +9,20 @@
     </div>
 </div>
 <div class="card-body">
-    <div class="card-title d-flex align-item-center">
+    <div class="card-title d-flex align-item-center justify-content-between">
         <span class=" fs-5 fw-bold campaign-title">{{campaign.title}}</span>
+        @if(displayStatusBadge) {
+        <div>
+            @if(campaign.totalDonation >= campaign.target) {
+            <span class="badge text-bg-secondary">Completed</span>
+            } @else {
+            <span class="badge"
+                [ngClass]="campaign.deadline > 0 ? 'text-bg-success' : 'text-bg-danger'">{{campaign.deadline
+                > 0 ?
+                'Active' : 'Expired'}}</span>
+            }
+        </div>
+        }
     </div>
     <div class="card-text">
         <span class="description">{{campaign.description}}</span>

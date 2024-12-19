@@ -41,7 +41,11 @@ export class UserCampaignsComponent implements OnInit {
     from(this.campaignService.getCampaigns())
       .pipe(
         // filter campaigns, that are not deleted and whose target donation is not completed
-        map(data => data.filter(campaign => campaign.owner.toUpperCase() === this.walletAddress?.toUpperCase())),
+        map(data =>
+          data.filter(
+            campaign => campaign.owner.toUpperCase() === this.walletAddress?.toUpperCase() && !campaign.isDeleted
+          )
+        ),
         // format the deadline
         map(res =>
           res.map(campaign => {
@@ -64,7 +68,6 @@ export class UserCampaignsComponent implements OnInit {
       )
       .subscribe({
         next: response => {
-          console.log('TESTING', response, this.walletAddress);
           this.campaignList = response;
           this.campaignsDataState = States.LOADED;
         },

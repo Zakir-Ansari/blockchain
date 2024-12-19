@@ -6,8 +6,14 @@
             @if(deletable) {
             <div class="z-3 position-absolute text-light w-100">
                 <div class="float-end p-3">
-                    <button type="button" class="btn btn-danger" title="Delete this Campaign">
+                    <button type="button" class="btn btn-danger" title="Delete this Campaign"
+                        (click)="deleteCampaign()">
+                        @if(deletionProcessState === STATES.LOADING) {
+                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                        } @else {
                         <i class='bx bxs-trash'></i>
+                        }
+
                     </button>
                 </div>
             </div>

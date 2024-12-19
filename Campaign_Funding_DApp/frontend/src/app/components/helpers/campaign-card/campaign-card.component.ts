@@ -1,13 +1,6 @@
 import { Clipboard } from '@angular/cdk/clipboard';
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  inject,
-  Input,
-  Output,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, ViewEncapsulation } from '@angular/core';
 import { Campaign } from '../../../models/campaign.model';
 import { TruncatePipe } from '../../../pipes/truncate.pipe';
 import { ToEthPipe } from '../../../pipes/to-eth.pipe';
@@ -23,8 +16,8 @@ import { ToEthPipe } from '../../../pipes/to-eth.pipe';
 export class CampaignCardComponent {
   @Input() campaign!: Campaign;
   @Input() campaignIndex!: number;
-  @Output() onCampaignSelected: EventEmitter<Campaign> =
-    new EventEmitter<Campaign>();
+  @Input() displayStatusBadge = false;
+  @Output() onCampaignSelected: EventEmitter<Campaign> = new EventEmitter<Campaign>();
 
   clipboard = inject(Clipboard);
 

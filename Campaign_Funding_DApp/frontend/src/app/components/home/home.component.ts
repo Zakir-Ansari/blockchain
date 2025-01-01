@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { from, map } from 'rxjs';
 import { States } from '../../constants/common.constant';
 import { Campaign, DonatorDonations } from '../../models/campaign.model';
@@ -9,11 +9,12 @@ import { ToastService } from '../../services/shared/toast/toast.service';
 import { UtilService } from '../../services/shared/util/util.service';
 import { CampaignCardComponent } from '../helpers/campaign-card/campaign-card.component';
 import { CampaignDetailsComponent } from '../helpers/campaign-details/campaign-details.component';
+import { CampaignFilterPipe } from '../../pipes/campaign-filter.pipe';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, CampaignDetailsComponent, CampaignCardComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, CampaignDetailsComponent, CampaignCardComponent, CampaignFilterPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   encapsulation: ViewEncapsulation.None,
@@ -28,6 +29,7 @@ export class HomeComponent implements OnInit {
   campaignForm!: FormGroup;
   campaignList: Campaign[] = [];
   selectedCampaign: Campaign | undefined;
+  searchKey = '';
 
   // helper
   isCampaignFormSubmitted = false;

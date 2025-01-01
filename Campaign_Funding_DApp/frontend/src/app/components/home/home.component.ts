@@ -14,7 +14,14 @@ import { CampaignFilterPipe } from '../../pipes/campaign-filter.pipe';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, CampaignDetailsComponent, CampaignCardComponent, CampaignFilterPipe],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CampaignDetailsComponent,
+    CampaignCardComponent,
+    CampaignFilterPipe,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   encapsulation: ViewEncapsulation.None,
@@ -75,7 +82,7 @@ export class HomeComponent implements OnInit {
       )
       .subscribe({
         next: response => {
-          this.campaignList = response;
+          this.campaignList = response.filter(res => res.deadline > 0);
           this.campaignsDataState = States.LOADED;
         },
         error: () => {

@@ -1,6 +1,5 @@
 <img [src]="campaign.image" class="z-2 position-relative card-img-top img-fluid" alt="image not available"
-    onerror="this.src='https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg'"
-    style="width: 100%; height: 100%;">
+    onerror="this.src='https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg'">
 <div class="z-3 position-absolute text-light w-100">
     <div class="float-end p-3">
         <button type="button" class="btn btn-primary btn-sm view-campaign" (click)="selectCampaign()"
@@ -18,8 +17,8 @@
             <span class="badge text-bg-secondary">Completed</span>
             } @else {
             <span class="badge"
-                [ngClass]="campaign.deadline > -1 ? 'text-bg-success' : 'text-bg-danger'">{{campaign.deadline
-                > -1 ?
+                [ngClass]="campaign.deadline > 0 ? 'text-bg-success' : 'text-bg-danger'">{{campaign.deadline
+                > 0 ?
                 'Active' : 'Expired'}}</span>
             }
         </div>

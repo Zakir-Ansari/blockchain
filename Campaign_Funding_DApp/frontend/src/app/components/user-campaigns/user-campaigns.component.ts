@@ -69,6 +69,7 @@ export class UserCampaignsComponent implements OnInit {
       .subscribe({
         next: response => {
           this.campaignList = response;
+          console.log('User Campaigns', this.campaignList);
           this.campaignsDataState = States.LOADED;
         },
         error: () => {

@@ -67,7 +67,7 @@
     </div>
     @if(campaignsDataState === STATES.LOADING){
     <div class="row text-center my-5">
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center my-5">
             <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
@@ -92,11 +92,19 @@
 
     </div>
     <div class="row my-5">
+        @if(campaignList.length === 0) {
+        <div class=" row text-center my-5">
+            <i class='bx bxl-dropbox failed-logo'></i>
+            <span class="fs-5 fw-bolder text-secondary my-1">No active campaigns to display!</span>
+        </div>
+        } @else {
         @for (campaign of campaignList | campaignFilter: searchKey; track $index) {
         <app-campaign-card class="card campaign-card col-xl-3 col-lg-4 col-md-6 col-sm-12 shadow-lg"
             style="padding: 0px;" [campaign]="campaign" [campaignIndex]="$index"
             (onCampaignSelected)="displayCampaignDetails($event)"></app-campaign-card>
         }
+        }
+
     </div>
     }
 </div>

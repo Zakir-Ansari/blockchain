@@ -58,7 +58,6 @@ export class CampaignDetailsComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    console.log('TESTING', this.campaign);
     this.donationForm = new FormGroup({
       amount: new FormControl('', [Validators.required, Validators.min(0)]),
     });

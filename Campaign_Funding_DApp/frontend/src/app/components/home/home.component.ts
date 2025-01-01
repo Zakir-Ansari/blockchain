@@ -82,6 +82,7 @@ export class HomeComponent implements OnInit {
       )
       .subscribe({
         next: response => {
+          // only active campaigns
           this.campaignList = response.filter(res => res.deadline > 0);
           this.campaignsDataState = States.LOADED;
         },
@@ -121,6 +122,7 @@ export class HomeComponent implements OnInit {
           'top-0 start-50 translate-middle-x'
         );
         this.resetCampaignForm();
+        this.ngOnInit();
       })
       .catch(error => {
         this.campaignCreationState = States.FAILED;

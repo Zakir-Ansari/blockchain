@@ -8,11 +8,13 @@ import { from, map } from 'rxjs';
 import { MetaMaskService } from '../../services/metamask/meta-mask.service';
 import { CampaignCardComponent } from '../helpers/campaign-card/campaign-card.component';
 import { CampaignDetailsComponent } from '../helpers/campaign-details/campaign-details.component';
+import { FormsModule } from '@angular/forms';
+import { CampaignFilterPipe } from '../../pipes/campaign-filter.pipe';
 
 @Component({
   selector: 'app-user-campaigns',
   standalone: true,
-  imports: [CampaignCardComponent, CampaignDetailsComponent],
+  imports: [CampaignCardComponent, CampaignDetailsComponent, FormsModule, CampaignFilterPipe],
   templateUrl: './user-campaigns.component.html',
   styleUrl: './user-campaigns.component.scss',
 })
@@ -29,6 +31,7 @@ export class UserCampaignsComponent implements OnInit {
 
   STATES = States;
   campaignsDataState!: States;
+  searchKey = '';
 
   ngOnInit(): void {
     this.metaMaskService.account$.subscribe(account => {
@@ -69,7 +72,6 @@ export class UserCampaignsComponent implements OnInit {
       .subscribe({
         next: response => {
           this.campaignList = response;
-          console.log('User Campaigns', this.campaignList);
           this.campaignsDataState = States.LOADED;
         },
         error: () => {

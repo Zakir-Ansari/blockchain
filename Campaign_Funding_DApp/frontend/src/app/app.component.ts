@@ -20,6 +20,8 @@ export class AppComponent implements OnInit {
   walletAddress: string | null = null;
   walletBalance: string | null = null;
 
+  currentYear = new Date().getFullYear();
+
   ngOnInit(): void {
     console.log('ENV:', environment.env);
     this.metaMaskService.account$.subscribe(account => {

@@ -26,7 +26,6 @@ export class CampaignService {
           'function getCampaigns() view returns ((uint256 id, address owner, string title, string description, uint256 target, uint256 deadline, uint256 amountCollected, string image, address[] donators, uint256[] donations, bool isDeleted)[])',
         params: [],
       }).then(data => {
-        console.log('Testing', data);
         return data.map(
           campaign =>
             ({

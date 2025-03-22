@@ -17,6 +17,14 @@ export class CampaignService {
     });
   }
 
+  /**
+   * This TypeScript function retrieves campaign data from a smart contract and processes it for
+   * display.
+   * @returns The `getCampaigns` function is returning a Promise that resolves to an array of Campaign
+   * objects. Each Campaign object contains properties such as id, owner, title, description, target,
+   * deadline, amountCollected, image, totalDonation, isDeleted, and donatorDonations. The data is
+   * fetched from a smart contract and processed before being returned.
+   */
   async getCampaigns() {
     try {
       const contract = this.thirdweb.getContract();
@@ -55,6 +63,27 @@ export class CampaignService {
     }
   }
 
+  /**
+   * This TypeScript function creates a campaign by interacting with a smart contract, handling errors
+   * and converting timestamps as needed.
+   * @param {string} title - The `title` parameter is a string that represents the title of the
+   * campaign you want to create.
+   * @param {string} description - The `description` parameter in the `createCampaign` function is a
+   * string that represents the description or details of the campaign being created. It provides
+   * information about the purpose, goals, or any other relevant details of the campaign.
+   * @param {number} target - The `target` parameter in the `createCampaign` function represents the
+   * fundraising goal or target amount that the campaign aims to reach. It is a number that specifies
+   * the amount of funds that the campaign creator is trying to raise from supporters or donors.
+   * @param {number} deadline - The `deadline` parameter in the `createCampaign` function represents
+   * the timestamp in milliseconds indicating the deadline for the campaign. It is converted to epoch
+   * time (seconds since January 1, 1970) by dividing it by 1000 before being passed to the smart
+   * contract function.
+   * @param {string} image - The `image` parameter in the `createCampaign` function is a string that
+   * represents the image associated with the campaign. This could be a URL pointing to an image file
+   * or any other form of image data that can be used to visually represent the campaign.
+   * @returns The `createCampaign` function is returning a promise that resolves to the result of
+   * sending a transaction to create a campaign on the blockchain.
+   */
   async createCampaign(title: string, description: string, target: number, deadline: number, image: string) {
     if (!this.walletAddress) {
       throw new Error('Wallet is not connected! Please connect Metamask wallet first.');
@@ -85,6 +114,17 @@ export class CampaignService {
     }
   }
 
+  /**
+   * The function `donateToCampaign` asynchronously donates a specified amount to a campaign using a
+   * smart contract, handling wallet connection and transaction execution.
+   * @param {number} campaignId - The `campaignId` parameter is the unique identifier of the campaign
+   * to which the donation will be made. It is of type `number`.
+   * @param {bigint} amount - The `amount` parameter in the `donateToCampaign` function represents the
+   * donation amount that the user wants to contribute to a specific campaign. It is of type `bigint`,
+   * which is a numeric data type in JavaScript that can represent integers of arbitrary length.
+   * @returns The `donateToCampaign` function is returning a promise that resolves to the result of
+   * sending a transaction to donate to a campaign.
+   */
   async donateToCampaign(campaignId: number, amount: bigint) {
     if (!this.walletAddress) {
       throw new Error('Wallet is not connected! Please connect Metamask wallet first.');
@@ -108,6 +148,15 @@ export class CampaignService {
     }
   }
 
+  /**
+   * The function `deleteCampaign` deletes a campaign by calling a contract method after checking for a
+   * connected wallet and handling errors.
+   * @param {number} campaignId - The `campaignId` parameter is a number that represents the unique
+   * identifier of the campaign that you want to delete.
+   * @returns The `deleteCampaign` function is returning the result of the `sendTransaction` function,
+   * which is likely a promise that resolves to the transaction hash of the delete campaign
+   * transaction.
+   */
   async deleteCampaign(campaignId: number) {
     if (!this.walletAddress) {
       throw new Error('Wallet is not connected! Please connect Metamask wallet first.');
